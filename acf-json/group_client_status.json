@@ -1,0 +1,76 @@
+{
+    "key": "group_client_status",
+    "title": "Clientes - Clasificación",
+    "fields": [
+        {
+            "key": "field_cliente_semaforo_estado",
+            "label": "Semáforo Estado",
+            "name": "semaforo_estado",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "hot": "🔴 HOT",
+                "warm": "🟡 WARM",
+                "cold": "🔵 COLD"
+            },
+            "multiple": 0,
+            "allow_null": 0,
+            "default_value": false,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "return_format": "value",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_cliente_puntuacion",
+            "label": "Puntuación",
+            "name": "puntuacion",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "default_value": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "impress_client"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "modified": 1770293748
+}

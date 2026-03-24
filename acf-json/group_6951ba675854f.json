@@ -1,0 +1,139 @@
+{
+    "key": "group_6951ba675854f",
+    "title": "Agentes - Información",
+    "fields": [
+        {
+            "key": "field_agent_email",
+            "label": "Email",
+            "name": "email",
+            "aria-label": "",
+            "type": "email",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_agent_telefono",
+            "label": "Teléfono",
+            "name": "telefono",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_agent_movil",
+            "label": "Móvil",
+            "name": "movil",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_agent_agencia",
+            "label": "Agencia",
+            "name": "agencia",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "impress_agency"
+            ],
+            "return_format": "object",
+            "taxonomy": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_agent_inmuebles",
+            "label": "Inmuebles asignados",
+            "name": "inmuebles",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "impress_property"
+            ],
+            "return_format": "object",
+            "taxonomy": [],
+            "min": 0,
+            "max": 0,
+            "filters": [
+                "search",
+                "post_type",
+                "taxonomy"
+            ],
+            "elements": [],
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "impress_agent"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1770293748,
+    "local_file": "\/Users\/joanraez\/Local Sites\/inmopress\/app\/public\/wp-content\/plugins\/inmopress-core\/acf-json\/group_6951ba675854f.json"
+}
