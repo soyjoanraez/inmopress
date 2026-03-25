@@ -93,23 +93,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         <option>En Alquiler</option>
                     </select>
                 </div>
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse; text-align: left; table-layout: fixed;">
-                        <thead>
-                            <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
-                                <th style="padding: 12px 24px; font-weight: 600; color: #6b7280; font-size: 12px; text-transform: uppercase; width: 40%">Inmueble</th>
-                                <th style="padding: 12px 24px; font-weight: 600; color: #6b7280; font-size: 12px; text-transform: uppercase;">Tipo</th>
-                                <th style="padding: 12px 24px; font-weight: 600; color: #6b7280; font-size: 12px; text-transform: uppercase;">Estado</th>
-                                <th style="padding: 12px 24px; font-weight: 600; color: #6b7280; font-size: 12px; text-transform: uppercase; text-align: right;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ip-properties-table-body">
-                            <tr><td colspan="4" style="padding: 40px; text-align: center; color: #6b7280; font-size: 14px;">
-                                <span class="dashicons dashicons-update" style="animation: spin 2s linear infinite; font-size: 24px; width: 24px; height: 24px;"></span><br>
-                                Cargando propiedades...
-                            </td></tr>
-                        </tbody>
-                    </table>
+                <div id="ip-properties-grid" style="padding: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; background: #f3f4f6;">
+                    <div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #6b7280; font-size: 14px;">
+                        <span class="dashicons dashicons-update" style="animation: spin 2s linear infinite; font-size: 24px; width: 24px; height: 24px;"></span><br>
+                        Cargando propiedades...
+                    </div>
                 </div>
             </div>
         `;
@@ -124,36 +112,113 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(posts => {
-            const tbody = document.getElementById('ip-properties-table-body');
-            tbody.innerHTML = '';
+            const grid = document.getElementById('ip-properties-grid');
+            grid.innerHTML = '';
             
             if (!posts || posts.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="padding: 40px; text-align: center; color: #6b7280; font-size: 14px;">No hay inmuebles registrados todavía.</td></tr>';
+                grid.innerHTML = '<div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #6b7280; font-size: 14px;">No hay inmuebles registrados todavía.</div>';
                 return;
             }
 
+            let cardsHTML = '';
             posts.forEach(post => {
-                let statusBadge = '<span style="background: #10b981; color: white; padding: 4px 10px; border-radius: 9999px; font-size: 12px; font-weight: 600;">Disponible</span>';
                 let title = post.title.rendered || '(Sin título)';
+                let ipMeta = post.ip_meta || {};
                 
-                // Intentar recuperar el tipo de término si hubiese una taxonomía (por ahora simulado)
-                let type = 'Vivienda';
+                // Extraer Imagen Destacada
+                let imageUrl = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23e5e7eb"/><text x="50%" y="50%" font-family="sans-serif" font-size="20" fill="%239ca3af" text-anchor="middle" dominant-baseline="middle">Sin Imagen</text></svg>';
+                if (post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]) {
+                    let media = post._embedded['wp:featuredmedia'][0];
+                    if (media.media_details && media.media_details.sizes && media.media_details.sizes.medium_large) {
+                        imageUrl = media.media_details.sizes.medium_large.source_url;
+                    } else if (media.source_url) {
+                        imageUrl = media.source_url;
+                    }
+                }
 
-                tbody.innerHTML += `
-                    <tr style="border-bottom: 1px solid #e5e7eb; transition: background 0.2s;">
-                        <td style="padding: 16px 24px; font-weight: 600; color: #111827; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${title}</td>
-                        <td style="padding: 16px 24px; color: #6b7280; font-size: 14px;">${type}</td>
-                        <td style="padding: 16px 24px;">${statusBadge}</td>
-                        <td style="padding: 16px 24px; text-align: right;">
-                            <button style="background: none; border: none; color: #3b82f6; cursor: pointer; font-weight: 600; font-size: 14px;">Editar</button>
-                        </td>
-                    </tr>
+                // Extraer datos usando ip_meta o la base de datos de fallback
+                let rawPrice = ipMeta.precio || ipMeta.precio_venta || ipMeta.precio_alquiler || null;
+                let formattedPrice = 'A consultar';
+                if (rawPrice) {
+                    formattedPrice = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(rawPrice);
+                }
+
+                let rooms = ipMeta.habitaciones || ipMeta.dormitorios || '-';
+                let baths = ipMeta.banos || ipMeta.baños || '-';
+                let size = ipMeta.superficie_construida || ipMeta.superficie || '-';
+
+                // Tipo de Inmueble y Ubicación (desde taxonomías embebidas)
+                let typeName = 'Inmueble';
+                let cityName = 'Ubicación no especificada';
+                let statusName = 'Disponible';
+                let isSold = false;
+
+                if (post._embedded && post._embedded['wp:term']) {
+                    post._embedded['wp:term'].forEach(taxonomy => {
+                        taxonomy.forEach(term => {
+                            if (term.taxonomy === 'impress_property_type') typeName = term.name;
+                            if (term.taxonomy === 'impress_city') cityName = term.name;
+                            if (term.taxonomy === 'impress_status' || term.taxonomy === 'impress_condition') {
+                                if (term.taxonomy === 'impress_status') statusName = term.name;
+                                if (term.slug.includes('vendid') || term.slug.includes('sold')) {
+                                    isSold = true;
+                                }
+                            }
+                        });
+                    });
+                }
+
+                let statusColor = isSold ? '#ef4444' : '#10b981';
+                let statusBadge = `<span style="background: ${statusColor}; color: white; padding: 4px 10px; border-radius: 9999px; font-size: 11px; font-weight: 600; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">${statusName}</span>`;
+
+                cardsHTML += `
+                    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)'">
+                        
+                        <!-- Imagen -->
+                        <div style="position: relative; height: 220px; background: #e5e7eb;">
+                            <img src="${imageUrl}" alt="${title}" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; top: 12px; left: 12px;">
+                                ${statusBadge}
+                            </div>
+                            <div style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #374151; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                ${typeName}
+                            </div>
+                        </div>
+
+                        <!-- Contenido -->
+                        <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                            <div style="color: #6b7280; font-size: 13px; font-weight: 500; margin-bottom: 8px; display: flex; align-items: center; gap: 4px;">
+                                <span class="dashicons dashicons-location-alt" style="font-size: 16px; width: 16px; height: 16px;"></span> ${cityName}
+                            </div>
+                            <h3 style="margin: 0 0 12px 0; font-size: 17px; font-weight: 700; color: #111827; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${title}</h3>
+                            
+                            <div style="font-size: 22px; font-weight: 800; color: #1e3a8a; margin-bottom: 20px;">
+                                ${formattedPrice}
+                            </div>
+
+                            <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; color: #6b7280; font-size: 14px; font-weight: 500;">
+                                <div style="display: flex; align-items: center; gap: 6px;" title="Habitaciones">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 14h18"/><path d="M5 14v5"/><path d="M19 14v5"/><path d="M3 10V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"/><path d="M7 10h10v4H7z"/></svg>
+                                    ${rooms}
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;" title="Baños">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><line x1="10" y1="5" x2="8" y2="7"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="7" y1="19" x2="7" y2="21"/><line x1="17" y1="19" x2="17" y2="21"/></svg>
+                                    ${baths}
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;" title="Superficie construida">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                                    ${size} m²
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 `;
             });
+            grid.innerHTML = cardsHTML;
         })
         .catch(err => {
             console.error(err);
-            document.getElementById('ip-properties-table-body').innerHTML = '<tr><td colspan="4" style="padding: 40px; text-align: center; color: #ef4444; font-size: 14px;">Error al cargar las propiedades.</td></tr>';
+            document.getElementById('ip-properties-grid').innerHTML = '<div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #ef4444; font-size: 14px;">Error al cargar las propiedades.</div>';
         });
     }
 
