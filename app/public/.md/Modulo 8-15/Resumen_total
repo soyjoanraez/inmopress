@@ -1,0 +1,333 @@
+Aquí va el resumen bien completo (y ordenado como si fuera el “documento madre” del proyecto) de todo lo que hemos hablado sobre Inmopress: arquitectura, SEO, IA, licencias, calendario/tareas, emails y automatizaciones.
+
+⸻
+
+Inmopress — Resumen detallado del proyecto
+
+1) Visión del producto
+
+Inmopress es un CRM inmobiliario en WordPress planteado como un SaaS (cobro mensual), comparable a soluciones tipo Inmovilla/Inmoweb, pero con una ventaja diferencial:
+	•	Web + CRM + SEO en el mismo ecosistema.
+	•	Arquitectura modular (activar/desactivar funcionalidades por plugin/módulos).
+	•	Optimización y compatibilidad máximas usando Gutenberg + ACF Pro (evitar dependencia de maquetadores para el core).
+	•	Enfoque “entidades y relaciones”: propiedades, propietarios, clientes, leads, agencias, agentes, visitas/tareas/eventos.
+	•	UX orientada a agente: móvil “task-first” para operar rápido.
+
+⸻
+
+2) Enfoque técnico y metodología de construcción
+
+Tu intención es construirlo desde local (entorno dev), con:
+	•	Tema hijo para la parte visual (front / web pública).
+	•	La lógica y funcionalidades (CPTs, permisos, módulos, IA, licencias, automatizaciones) como plugins para poder:
+	•	activar/desactivar por proyecto/cliente
+	•	reutilizar
+	•	mantener y versionar como producto SaaS
+
+⸻
+
+3) Estructura de datos: CPTs y taxonomías
+
+3.1 CPTs principales definidos
+
+La estructura planteada incluye estos CPTs (nombres orientativos, puedes ajustarlos):
+	•	Propiedades (impress_property)
+	•	Clientes (impress_client)
+	•	Leads (impress_lead)
+	•	Eventos (unificado) (impress_event) ✅ (decisión clave)
+	•	Propietarios (impress_owner)
+	•	Agentes (impress_agent)
+	•	Agencias (impress_agency)
+	•	Promociones (impress_promotion)
+
+Decisión importante: unificar “tareas + visitas + llamadas + recordatorios” en un único CPT Eventos, en lugar de tener CPT separados.
+
+3.2 Taxonomías SEO (estructura posicionable)
+
+Para que el SEO escale de forma natural, se definieron taxonomías para construir “landings” posicionables:
+	•	impress_city (ciudad/provincia)
+	•	impress_area (zona/barrio) jerárquica
+	•	impress_property_type (tipo: piso, chalet…)
+	•	impress_operation (venta, alquiler, etc.)
+	•	impress_feature (piscina, ascensor, vistas…)
+
+Estas taxonomías no solo organizan: crean URLs SEO.
+
+⸻
+
+4) Campos personalizados ACF: filosofía y reglas
+
+4.1 Regla base: “ACF = fuente de verdad”
+	•	Los datos reales siempre se rellenan manualmente (precio, m², habitaciones, extras reales, estado, etc.).
+	•	La IA no rellena datos, solo ayuda con contenido SEO (titles, metas, FAQs, textos de zona) basándose en esos datos reales.
+
+4.2 Campo “Referencia” como eje del sistema
+
+Se remarcó una necesidad concreta:
+	•	El campo referencia de propiedad (impress_ref) debe ser único y fundamental.
+	•	Y además querías que la relación Propietario ↔ Propiedad se pudiera vincular por referencia.
+
+Recomendación implícita: aunque vincules por referencia (por tu operativa), conviene tener también una relación robusta (Post Object/Relationship) o un “resolutor” que convierta referencia→ID para evitar inconsistencias en el tiempo.
+
+⸻
+
+5) Listados, filtros y páginas con Gutenberg (sin Elementor para el core)
+
+5.1 Objetivo
+
+Que los listados (catálogo de propiedades) y filtros estén hechos con:
+	•	Query Loop de Gutenberg
+	•	Bloques ACF (filtros y tarjetas)
+	•	Lógica de query en PHP (pre_get_posts)
+
+5.2 Estrategia de filtros
+	•	Los filtros se construyen en frontend con parámetros (GET) o rutas limpias por taxonomía.
+	•	Los filtros se traducen a WP_Query con pre_get_posts.
+	•	A nivel SEO:
+	•	Las páginas “limpias” (sin parámetros) se indexan.
+	•	Las combinaciones de filtros con GET deben ser noindex,follow para evitar contenido duplicado y thin content.
+
+⸻
+
+6) Estrategia SEO definitiva (arquitectura + contenido + control)
+
+Aquí definimos un enfoque SEO “serio”, no solo “poner metas”:
+
+6.1 Qué posiciona de verdad
+	•	Zonas (landings por barrio/pueblo)
+	•	Tipologías (tipo de vivienda)
+	•	Operación (venta/alquiler)
+	•	Y combinaciones limpias (no filtros infinitos)
+
+Las fichas individuales ayudan, pero el ROI fuerte es:
+	•	/zona/denia/
+	•	/zona/denia/les-rotes/
+	•	/tipo/chalet/
+	•	/venta/denia/chalet/ (si decides rutas combinadas)
+
+6.2 URLs y slugs
+
+Se planteó usar URLs estables y únicas, incorporando referencia para evitar duplicidad y mejorar unicidad.
+
+6.3 Rendimiento SEO técnico
+	•	Gutenberg nativo
+	•	controlar imágenes, lazy load
+	•	evitar consultas costosas en loops (no abusar de get_fields() repetido)
+	•	cachés donde convenga
+
+⸻
+
+7) IA para SEO con la API de ChatGPT (modelo híbrido)
+
+7.1 Qué sí automatizar con IA
+	•	SEO Title
+	•	Meta description
+	•	Focus keyword (si la usas)
+	•	FAQs
+	•	Intro/Texto de landings de zona (con revisión manual ideal)
+
+7.2 Qué NO automatizar (o solo con verificación)
+	•	Datos sensibles o afirmaciones no verificables (distancias, “a 2 min”, etc.)
+	•	Precios/datos legales
+	•	Claims que te puedan meter en problemas
+
+7.3 Dónde se guarda lo generado
+
+Decidiste que lo mejor es:
+	•	Escribir directamente en Rank Math, en lugar de duplicar campos ACF.
+
+Se propusieron dos modos:
+	•	Modo rápido: IA → Rank Math directamente
+	•	Modo pro: IA → ACF “borrador” → revisión → “publicar a Rank Math”
+
+7.4 Prompts controlados (clave)
+
+Los prompts deben:
+	•	usar solo datos ACF
+	•	prohibir inventar
+	•	devolver JSON válido con longitudes controladas
+	•	generar contenido único (apoyándose en referencia/zona)
+
+⸻
+
+8) SaaS, seguridad y protección del core
+
+8.1 Realidad importante
+
+Si instalas el core en un servidor que no controlas y el cliente tiene acceso admin/FTP:
+	•	no puedes impedir 100% que copien el plugin
+	•	pero sí puedes hacer que no funcione sin licencia y controlarlo comercialmente
+
+8.2 Decisión: todo en el servidor del cliente
+
+Tu preferencia fue:
+	•	WordPress + CRM en un solo servidor (el del cliente) para simplicidad y coste
+	•	Aun así, necesitas un licensing server mínimo externo para validar suscripciones (no es “otro CRM”, es solo el control de licencias).
+
+⸻
+
+9) Sistema de licencias + cobro mensual automático (Stripe)
+
+9.1 Por qué Stripe
+
+Se concluyó que Stripe es más directo y “SaaS-native” que Woo + Subscriptions para este caso:
+	•	suscripciones robustas
+	•	reintentos/dunning
+	•	portal cliente para cambiar tarjeta, facturas, upgrades
+	•	webhooks para activar/desactivar licencias automáticamente
+
+9.2 Tiers de precios propuestos (base)
+	•	Starter: 29€/mes
+	•	Pro: 59€/mes
+	•	Pro+AI: 79€/mes
+	•	Agency: 119€/mes
+
+Add-ons:
+	•	packs de agentes
+	•	IA extra (generaciones)
+	•	dominio extra (staging gratis)
+
+9.3 Cómo funciona la licencia
+	•	License key + installation_id + domain
+	•	Heartbeat cada X horas
+	•	Estados:
+	•	active
+	•	past_due (pago fallido)
+	•	grace (periodo de cortesía)
+	•	canceled
+	•	blocked
+
+Recomendación: bloqueo suave
+	•	se desactiva el CRM interno
+	•	pero no rompes la web pública / SEO
+
+9.4 Documentación generada
+
+Se llegaron a crear documentos .md con:
+	•	Sistema de licencias (BD, endpoints, estados)
+	•	Plugin de licencias WP + requests + eventos Stripe (implementación)
+
+⸻
+
+10) Módulo de tareas / calendario (agentes)
+
+Se definió como esencial:
+	•	Un panel por agente con:
+	•	agenda diaria
+	•	tareas
+	•	visitas
+	•	llamadas
+	•	UX móvil perfecta:
+	•	checklist rápido
+	•	completar tarea en 2 toques
+	•	nota rápida + validación
+
+La decisión estructural fue un CPT único de Eventos que cubra:
+	•	visita
+	•	llamada
+	•	tarea
+	•	email
+	•	reunión
+con relaciones a:
+	•	cliente/lead/propietario
+	•	propiedad
+	•	agente
+	•	agencia
+
+⸻
+
+11) Email dentro del CRM (enviar/recibir y asociar al expediente)
+
+Se propuso incorporar email como “módulo CRM” para que:
+	•	puedas enviar desde Inmopress
+	•	el destinatario reciba en su correo normal
+	•	y la conversación quede asociada al contacto (cliente/lead/propietario/agente)
+
+Se analizaron 3 enfoques:
+
+V1 recomendada (rápida y robusta)
+	•	Envío desde CRM vía SMTP
+	•	BCC “inteligente” con token (crm+token@…)
+	•	IMAP para capturar y asociar emails y respuestas
+	•	Guardado en un CPT “mensajes” con relaciones
+
+V2 premium (más complejo)
+	•	Conectores Gmail / Microsoft 365 vía OAuth + APIs
+	•	Sincronización real de inbox/sent
+
+Se planteó un CPT tipo:
+	•	impress_message / impress_email
+con:
+	•	thread_id, from/to, subject, body_html/text, attachments
+	•	relaciones a entidad y propiedad
+	•	logs y permisos
+
+⸻
+
+12) Automatizaciones (motor de workflows)
+
+Querías un sistema 100% automatizado para:
+	•	emails según estados
+	•	alertas y recordatorios
+	•	matching “nueva propiedad encaja con clientes”
+	•	secuencias de seguimiento (drip)
+
+Se definió una arquitectura de automatización con:
+	•	Triggers (cambio estado, alta, actualización, evento completado…)
+	•	Conditions (zona, precio, tipo, score…)
+	•	Actions (enviar email, crear tarea, asignar agente…)
+	•	Templates (plantillas)
+	•	Queue (cola fiable)
+	•	Logs (auditoría)
+
+Y se destacó el motor de matching con:
+	•	criterios del cliente (intereses)
+	•	scoring
+	•	límites anti-spam
+	•	dedupe (no repetir avisos)
+
+⸻
+
+13) Para “versión definitiva” se recomendaron mejoras extra
+
+Para que sea “CRM definitivo” (SaaS serio), se identificaron piezas valiosas:
+	•	Activity log automático (auditoría real)
+	•	Pipeline más completo de estados de propiedad
+	•	Notas internas privadas vs equipo
+	•	Ofertas/propuestas como entidad (CPT impress_offer)
+	•	Dashboards por rol (agente vs agencia)
+	•	Documentos y adjuntos estructurados (CPT documents o repeater serio)
+	•	Métricas mínimas (días en mercado, ratio visitas/ofertas/cierres)
+	•	Aislamiento multi-agencia consistente (agency_id como scope real)
+
+⸻
+
+14) Entregables/documentos producidos durante la conversación
+
+Se generaron (o quedaron planteados) documentos .md como blueprint:
+	•	Sistema de Licencias (Stripe + licensing server + plugin)
+	•	Licensing plugin + requests + webhooks (implementación)
+	•	Resumen SEO (arquitectura + Rank Math + IA)
+	•	CPTs + ACF (estructura de datos)
+
+⸻
+
+Conclusión: Qué es Inmopress según lo definido
+
+Inmopress queda planteado como:
+	•	Un CRM inmobiliario completo en WordPress
+	•	Con arquitectura orientada a SEO (zonas/tipos/operación)
+	•	Con IA aplicada al SEO de forma controlada (Rank Math)
+	•	Con sistema SaaS de licencias y pagos mensuales (Stripe)
+	•	Con módulo operativo (eventos/calendario) y UX móvil
+	•	Con email interno y automatizaciones para escalar ventas
+	•	Modular y escalable (plugins activables/desactivables)
+
+⸻
+
+Si quieres, el siguiente paso más útil es que yo te lo deje convertido en una hoja de ruta v1/v2/v3 con prioridades por:
+	•	impacto en ventas
+	•	esfuerzo técnico
+	•	dependencia entre módulos
+
+Y con eso ya puedes empezar a construir sin perder tiempo en “qué va primero”.

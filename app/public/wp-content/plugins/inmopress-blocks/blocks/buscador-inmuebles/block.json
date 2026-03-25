@@ -1,0 +1,26 @@
+{
+    "name": "acf/buscador-inmuebles",
+    "title": "Buscador de Inmuebles",
+    "description": "Formulario de búsqueda con filtros por operación, tipo, ciudad y precio.",
+    "style": "file:./style.css",
+    "script": "file:./script.js",
+    "category": "inmopress",
+    "icon": "search",
+    "keywords": [
+        "buscador",
+        "search",
+        "filtro",
+        "inmuebles"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "wide",
+            "full"
+        ],
+        "mode": true
+    }
+}

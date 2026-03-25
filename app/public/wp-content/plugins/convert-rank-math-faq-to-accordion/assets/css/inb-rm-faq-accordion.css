@@ -1,0 +1,70 @@
+#rank-math-faq .rank-math-list-item {
+    border: var(--inbrmfa-border-width) var(--inbrmfa-border-style) var(--inbrmfa-border-color);
+    border-radius: var(--inbrmfa-border-radius);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden
+}
+
+#rank-math-faq .rank-math-question {
+    display: block;
+    font-size: var(--inbrmfa-question-font-size);
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: var(--inbrmfa-question-text-align);
+    color: var(--inbrmfa-question-color);
+    background-color: var(--inbrmfa-question-bg-color);
+    margin: 0 !important;
+    padding: 15px 54px 15px 12px;
+    position: relative;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+#rank-math-faq .rank-math-question.rm-faq-question-active {
+    border-bottom: var(--inbrmfa-border-width) var(--inbrmfa-border-style) var(--inbrmfa-border-color);
+}
+
+#rank-math-faq .rank-math-question::after {
+    content: "+";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 54px;
+    text-align: center;
+    font-weight: 700;
+    color: #000;
+    font-size: 20px;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
+
+#rank-math-faq .rank-math-question.rm-faq-question-active::after {
+    content: "-"
+}
+
+#rank-math-faq .rank-math-answer {
+    font-size: var(--inbrmfa-answer-font-size);
+    line-height: 1.4 !important;
+    text-align: var(--inbrmfa-answer-text-align);
+    color: var(--inbrmfa-answer-color);
+    background-color: var(--inbrmfa-answer-bg-color);
+    margin: 0;
+    padding: 12px;
+    display: none
+}
+
+#rank-math-faq .rank-math-answer p {
+    margin-bottom: .5em
+}
+
+#rank-math-faq .rm-faq-question-btn {
+    all: unset !important
+}

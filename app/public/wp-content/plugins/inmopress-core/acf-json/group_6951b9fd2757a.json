@@ -1,0 +1,153 @@
+{
+    "key": "group_6951b9fd2757a",
+    "title": "Inmuebles - Costes y Gastos",
+    "fields": [
+        {
+            "key": "field_ibi",
+            "label": "IBI (€\/año)",
+            "name": "ibi",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "append": "€\/año",
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "placeholder": "",
+            "prepend": ""
+        },
+        {
+            "key": "field_impuesto_basura",
+            "label": "Impuesto basura",
+            "name": "impuesto_basura",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "append": "€\/año",
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "placeholder": "",
+            "prepend": ""
+        },
+        {
+            "key": "field_comunidad",
+            "label": "Comunidad (€\/mes)",
+            "name": "comunidad",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "append": "€\/mes",
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "placeholder": "",
+            "prepend": ""
+        },
+        {
+            "key": "field_gastos_comunidad",
+            "label": "Gastos de comunidad incluidos",
+            "name": "gastos_comunidad",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_co2_emisiones",
+            "label": "CO2 Emisiones",
+            "name": "co2_emisiones",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_otros_gastos",
+            "label": "Otros gastos",
+            "name": "otros_gastos",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": "",
+            "rows": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "impress_property"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1770293748,
+    "local_file": "\/Users\/joanraez\/Local Sites\/inmopress\/app\/public\/wp-content\/plugins\/inmopress-core\/acf-json\/group_6951b9fd2757a.json"
+}

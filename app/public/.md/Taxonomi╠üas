@@ -1,0 +1,247 @@
+Perfecto: unificamos en EVENTOS ✅ y además respetamos tu regla clave: la relación Propietario ↔ Propiedad se basa en la REFERENCIA, no en “post object” directo.
+
+Te dejo el listado final óptimo de CPTs + ACFs (por CPT), con las relaciones y cómo resolver lo de “vincular por referencia” de forma limpia y escalable.
+
+⸻
+
+1) CPTs finales (óptimos)
+	1.	Propiedades → impress_property
+	2.	Propietarios → impress_owner
+	3.	Clientes → impress_client
+	4.	Leads → impress_lead
+	5.	Agencias → impress_agency
+	6.	Agentes → impress_agent
+	7.	Eventos (tareas + visitas + llamadas + emails) → impress_event
+	8.	Promociones → impress_promotion (marketing / agrupación de propiedades)
+
+Con esto ya cubres CRM + panel del agente + calendario.
+
+⸻
+
+2) Taxonomías recomendadas (máximo orden / mínimo dolor)
+
+Para Propiedades
+	•	impress_operation → Venta / Alquiler / Vacacional
+	•	impress_property_type → Piso, Chalet, Ático…
+	•	impress_city → Provincia / ciudad grande
+	•	impress_town → Municipio (jerárquica o relacionada a city)
+	•	impress_feature → Piscina, garaje, ascensor… (mejor taxonomía que 80 switches)
+
+Para CRM
+	•	impress_lead_stage → HOT / WARM / COLD + (opcional pipeline: new/contacted/visit/negotiation/won/lost)
+	•	impress_source → Web / Referido / Redes / Portal…
+
+Sugerencia pro: features como taxonomía te evita 200 campos ACF y va mucho más rápido a largo plazo.
+
+⸻
+
+3) ACF por CPT (listado “definitivo”)
+
+A) impress_property — Propiedades
+
+Grupo 1: Identidad
+	•	impress_ref (Text, required, unique) ✅ LA CLAVE
+	•	impress_status (Select: borrador interno / publicada / reservada / vendida / alquilada)
+	•	impress_operation (Taxonomy terms: operación)
+
+Grupo 2: Precio y condiciones
+	•	impress_price (Number)
+	•	impress_price_min (Number) (si negociación)
+	•	impress_commission_type (Select: % / fijo)
+	•	impress_commission_value (Number)
+	•	(si alquiler) impress_rent_deposit (Number), impress_rent_min_stay (Number), impress_pets_allowed (True/False)
+
+Grupo 3: Características
+	•	impress_area_built_m2 (Number)
+	•	impress_area_useful_m2 (Number)
+	•	impress_plot_m2 (Number)
+	•	impress_bedrooms (Number)
+	•	impress_bathrooms (Number)
+	•	impress_floor (Text/Number)
+	•	impress_year (Number)
+	•	impress_energy_rate (Select A–G)
+	•	impress_features (Taxonomy: impress_feature multi)
+
+Grupo 4: Ubicación
+	•	impress_city (Taxonomy)
+	•	impress_town (Taxonomy)
+	•	impress_address_private (Text)
+	•	impress_lat (Number) + impress_lng (Number) (mejor que Google Map si quieres rendimiento y control)
+
+Grupo 5: Media
+	•	impress_gallery (Gallery)
+	•	impress_video_url (URL)
+	•	impress_tour_url (URL)
+	•	impress_docs (Repeater: file + label)
+
+Grupo 6: Asignación interna (operativa)
+	•	impress_agency_rel (Post Object → impress_agency)
+	•	impress_agent_rel (Post Object → impress_agent)
+
+✅ Importante: aquí NO pongo owner_rel si vamos “por referencia”. La relación con propietario la hacemos desde el propietario usando la referencia.
+
+⸻
+
+B) impress_owner — Propietarios
+
+Grupo 1: Datos
+	•	impress_owner_name (Text)
+	•	impress_owner_lastname (Text)
+	•	impress_owner_phone (Text)
+	•	impress_owner_email (Email)
+	•	impress_owner_iddoc (Text DNI/CIF)
+	•	impress_owner_notes (Textarea)
+
+Grupo 2: Vinculación por referencia (lo que pides)
+	•	impress_owner_property_refs (Repeater)
+	•	property_ref (Text, required)
+	•	role (Select: titular / cotitular / representante) (opcional)
+	•	since (Date) (opcional)
+
+✅ Este repeater es tu “tabla puente” basada en referencias.
+
+Luego, el sistema “resuelve” esas referencias y te permite mostrar automáticamente las propiedades del propietario.
+
+⸻
+
+C) impress_client — Clientes
+
+Grupo 1: Datos personales
+	•	impress_client_name (Text)
+	•	impress_client_lastname (Text)
+	•	impress_client_phone (Text)
+	•	impress_client_email (Email)
+	•	impress_client_address (Text)
+
+Grupo 2: Clasificación / pipeline
+	•	impress_lead_stage (Taxonomy: HOT/WARM/COLD o pipeline)
+	•	impress_source (Taxonomy)
+	•	impress_client_agent_rel (Post Object → impress_agent)
+
+Grupo 3: Preferencias de búsqueda (para cruce oferta-demanda)
+	•	impress_budget_min (Number)
+	•	impress_budget_max (Number)
+	•	impress_pref_operation (Taxonomy: operación)
+	•	impress_pref_types (Taxonomy: tipo vivienda multi)
+	•	impress_pref_city (Taxonomy multi)
+	•	impress_pref_town (Taxonomy multi)
+	•	impress_pref_beds_min (Number)
+	•	impress_pref_notes (Textarea)
+
+Grupo 4: Relaciones útiles
+	•	impress_client_favs (Relationship → impress_property) (esto sí puede ser por post ID, no pasa nada)
+
+⸻
+
+D) impress_lead — Leads
+
+Mismo modelo que Cliente pero más ligero + conversión.
+
+	•	impress_lead_name (Text)
+	•	impress_lead_phone (Text)
+	•	impress_lead_email (Email)
+	•	impress_lead_source (Taxonomy)
+	•	impress_lead_stage (Taxonomy)
+	•	impress_lead_agent_rel (Post Object → impress_agent)
+	•	impress_lead_notes (Textarea)
+	•	impress_lead_converted (True/False)
+	•	impress_lead_client_rel (Post Object → impress_client) (si convertido)
+
+⸻
+
+E) impress_agency — Agencias
+	•	impress_agency_name (Text)
+	•	impress_agency_logo (Image)
+	•	impress_agency_phone (Text)
+	•	impress_agency_email (Email)
+	•	impress_agency_address (Text)
+	•	impress_agency_city / impress_agency_town (Taxonomy)
+	•	impress_agency_manager_user (User field) (usuario WP, sin contraseñas en ACF)
+
+⸻
+
+F) impress_agent — Agentes
+	•	impress_agent_user (User field) ✅ (el agente “real” logueable)
+	•	impress_agent_agency_rel (Post Object → Agency)
+	•	impress_agent_name / lastname (Text) (o tirar del user)
+	•	impress_agent_phone (Text)
+	•	impress_agent_email (Email)
+	•	impress_agent_avatar (Image)
+	•	impress_agent_bio (Textarea)
+	•	impress_agent_color (Color picker) (para calendario)
+
+⸻
+
+G) impress_event — Eventos (tareas + visitas + llamadas)
+
+Grupo 1: Datos del evento
+	•	impress_event_type (Select: llamada / email / visita / reunión / seguimiento / tarea)
+	•	impress_event_status (Select: nueva / en curso / hecha / cancelada)
+	•	impress_event_priority (Select: baja/media/alta/crítica)
+	•	impress_event_start (DateTime)
+	•	impress_event_end (DateTime)
+	•	impress_event_reminder_min (Number)
+	•	impress_event_notes (Textarea)
+
+Grupo 2: Relaciones
+	•	impress_event_agent_rel (Post Object → Agent)
+	•	impress_event_client_rel (Post Object → Client) (opcional)
+	•	impress_event_property_rel (Post Object → Property) (opcional)
+
+Grupo 3: Cierre “en campo” (si visita)
+	•	impress_event_signature (Image / signature field)
+	•	impress_event_photos (Gallery)
+	•	impress_event_result (Select: visitado / no presentado / interesado / descartado)
+
+⸻
+
+H) impress_promotion — Promociones
+	•	impress_promo_start (Date)
+	•	impress_promo_end (Date)
+	•	impress_promo_properties (Relationship → Properties)
+	•	impress_promo_gallery (Gallery)
+	•	impress_promo_cta_url (URL)
+
+⸻
+
+4) Cómo hacer la relación Propietario ↔ Propiedad “por referencia” (bien hecha)
+
+✅ La regla:
+
+El propietario guarda una lista de referencias (impress_owner_property_refs).
+Luego el sistema encuentra las propiedades cuyo impress_ref coincide.
+
+Implementación óptima (sin duplicar datos)
+	•	En la ficha del propietario, un bloque/tabla “Propiedades del propietario” que ejecuta una query:
+	•	meta_key = impress_ref
+	•	meta_value IN (refs del propietario)
+
+Recomendación PRO para rendimiento
+
+Cuando el propietario se guarda:
+	•	Generas y guardas en un campo oculto impress_owner_property_ids (array de IDs) para no buscar cada vez.
+	•	Eso te permite filtrar/listar rapidísimo.
+
+Si quieres, te paso el hook exacto acf/save_post que:
+	1.	lee las refs del propietario,
+	2.	encuentra las propiedades,
+	3.	guarda el array de IDs cacheado,
+	4.	(opcional) marca en la propiedad un impress_owner_id (si quieres “reverse lookup”).
+
+⸻
+
+5) Resultado final para tu panel de agente
+
+Con esto, el panel “Mi trabajo” sale solo:
+	•	Mis propiedades: property donde impress_agent_rel = mi agente
+	•	Mis clientes: client donde impress_client_agent_rel = mi agente
+	•	Mi agenda: event donde impress_event_agent_rel = mi agente
+	•	Mis propietarios: (opcional) propietarios cuyas refs apuntan a propiedades asignadas a mi agente
+
+⸻
+
+Si me das luz verde, el siguiente paso práctico te lo dejo listo en formato “implementable”:
+	1.	Registro PHP de los CPTs + taxonomías
+	2.	Esquema de grupos ACF (y si quieres, export JSON)
+	3.	Hook para resolver propietarios por referencia + cachear IDs
+	4.	Estructura de páginas Gutenberg del panel del agente (hoy / calendario / clientes / propiedades)

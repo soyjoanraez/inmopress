@@ -1,0 +1,56 @@
+La información proporcionada en las fuentes detalla una estructura de **CPT (Custom Post Types)** específica para un proyecto de **CRM Inmobiliario en WordPress** denominado "Inmopress" [1, 2].
+
+Los tipos de CPT que se podrían generar para esta web en WordPress, junto con sus propósitos principales, son [1]:
+
+### Tipos de CPT de Inmopress (CRM Inmobiliario)
+
+1.  **CPT Inmuebles** (`impress_property`) [1, 3]:
+    *   Este CPT está diseñado para almacenar toda la información detallada de las propiedades [3].
+    *   Incluye campos para la **Información General** (Título, Dirección, Descripción, Referencia) [3] y el **Propósito** (Alquiler o Venta) [3].
+    *   Registra el estado del inmueble (Publicada, Vendida, Reservada) [3].
+    *   Detalla las **Características de la Ficha**, como Superficie útil, Superficie construida, Año de construcción, Dormitorios, Baños, Plantas [4], y características conmutables (Switches) como Aire acondicionado, Ascensor, Piscina, Garajes, Jardín, etc. [4, 5].
+    *   Contiene la información financiera para **Venta** (Precio de venta, Precio mínimo, Tipo y Cantidad de comisión/descuento) [6] y **Alquiler** (Precio, Depósito, Mascotas permitidas, Plazo mínimo) [7].
+    *   Se relaciona con la Agencia colaboradora, el Agente y el Propietario [8].
+
+2.  **CPT Clientes** (`impress_client`) [1, 9]:
+    *   Diseñado para la gestión de contactos y la relación con el cliente [9].
+    *   Almacena **Datos Personales** (Nombre, Apellidos, Teléfono, Correo, Dirección) [9].
+    *   Incluye campos de **Estado y Clasificación**, como el Semáforo de Estado (HOT, WARM, COLD) y el Estado Lead (Pendiente, Llamado) [10].
+    *   Guarda información sobre el **Canal** de entrada (Web, Referido, Redes sociales) y los **Intereses** del cliente (Compra, Alquiler, Provincia, Población, Tipo de vivienda) [10].
+    *   Permite un registro detallado de las **Visitas a Inmuebles** (Referencia, Fecha, Nota) y **Solicitudes** [11].
+
+3.  **CPT Leads** (`impress_lead`) [1, 12]:
+    *   Se crea automáticamente cuando un lead llega desde formularios y puede ser convertido posteriormente en un Cliente [12].
+    *   Los campos sugeridos son similares a los de Cliente, con campos adicionales para marcar si ha sido **convertido a cliente** y para establecer la vinculación con el CPT Cliente relacionado [12].
+
+4.  **CPT Visitas** (`impress_visit`) [1, 13]:
+    *   Diseñado para gestionar las hojas de visita [13].
+    *   Incluye campos sugeridos para la Fecha y hora, el Cliente, el Inmueble, el Agente, el Estado, Notas, Firma y Fotos [13].
+
+5.  **CPT Agencias** (`impress_agency`) [1, 13]:
+    *   Almacena los datos de **Contacto** y de la **Agencia** (Nombre de la agencia, Logo, Dirección, Correo, Teléfono, Ciudad/Municipio) [14].
+    *   También incluye Datos de Acceso (Usuario, Contraseña) [15].
+
+6.  **CPT Agentes** (`impress_agent`) [1, 15]:
+    *   Este CPT está pensado para ser utilizado con un usuario con el rol de Agente y debe estar vinculado a una Agencia [15].
+    *   Guarda información como el Usuario de WordPress, Agencia relacionada, Nombre, Apellidos, Teléfono, Email, Avatar y Biografía (Bio) [15].
+
+7.  **CPT Propietarios** (`impress_owner`) [1, 16]:
+    *   Contiene los datos del propietario (Nombre, Apellidos, Teléfono, Correo, DNI) [16].
+    *   Se sugiere la opción de que los propietarios puedan subir inmuebles que se queden en borrador [16].
+
+8.  **CPT Promociones** (`impress_promotion`) [1, 17]:
+    *   Diseñado para agrupar Inmuebles relacionados en una promoción [17].
+    *   Incluye Título, Descripción, Fecha de inicio y fin, Imagen destacada y Galería [17].
+
+### Taxonomías y Roles Adicionales
+
+Para estructurar mejor estos CPTs, la solución utiliza las siguientes **Taxonomías** [17, 18]:
+*   **Operación:** (Alquiler, Venta, Alquiler vacacional) [17].
+*   **Tipo de Vivienda:** (Apartamento, Casa, Chalet, Piso, Loft, etc.) [18].
+*   **Ciudad** (Provincia) y **Población** (Municipio) [18].
+
+Además, se definen **Roles y Permisos** específicos en WordPress para gestionar el acceso al contenido, incluyendo: Administrador, Agencia, Agente, Trabajador y Cliente [18, 19]. Por ejemplo, el rol de **Agente** puede ver y crear nuevos Inmuebles, Clientes, Leads y Visitas, pero no editar Inmuebles ni ver otros Usuarios, mientras que el rol de **Cliente** solo tiene acceso a su Perfil en el *frontend* (parte visible del sitio) [19].
+
+---
+*Metafóricamente, si tu web WordPress es un almacén, los CPT son las diferentes estanterías especializadas. En lugar de meter todos los contactos, casas y visitas en una sola pila de "Páginas", el CPT de Inmuebles crea una estantería exclusiva para propiedades, el CPT de Clientes para las fichas de contacto, y así sucesivamente, lo que permite una organización y gestión del negocio mucho más eficiente.*

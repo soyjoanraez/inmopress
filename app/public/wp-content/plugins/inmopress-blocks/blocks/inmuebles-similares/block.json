@@ -1,0 +1,29 @@
+{
+    "name": "inmopress/inmuebles-similares",
+    "title": "Inmuebles Similares",
+    "description": "Muestra un grid con inmuebles similares basados en ubicación y tipo.",
+    "category": "inmopress-blocks",
+    "icon": "images-alt2",
+    "keywords": [
+        "inmopress",
+        "similares",
+        "relacionados"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "full",
+            "wide"
+        ],
+        "mode": false
+    },
+    "attributes": {
+        "posts_to_show": {
+            "type": "number",
+            "default": 3
+        }
+    }
+}

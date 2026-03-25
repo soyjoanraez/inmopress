@@ -1,0 +1,67 @@
+.inmopress-features {
+    margin: 2rem 0;
+}
+
+.inmopress-features-container {
+    display: grid;
+    gap: 1rem;
+}
+
+.inmopress-features.layout-grid.cols-2 .inmopress-features-container {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.inmopress-features.layout-grid.cols-3 .inmopress-features-container {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.inmopress-features.layout-grid.cols-4 .inmopress-features-container {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.inmopress-features.layout-list .inmopress-features-container {
+    grid-template-columns: 1fr;
+}
+
+.inmopress-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.inmopress-feature-item:hover {
+    background: #e8e8e8;
+}
+
+.inmopress-feature-icon {
+    font-size: 1.25rem;
+    color: #0073aa;
+}
+
+.inmopress-feature-name {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.inmopress-no-features {
+    text-align: center;
+    color: #666;
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .inmopress-features.layout-grid.cols-3 .inmopress-features-container,
+    .inmopress-features.layout-grid.cols-4 .inmopress-features-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .inmopress-features.layout-grid .inmopress-features-container {
+        grid-template-columns: 1fr;
+    }
+}

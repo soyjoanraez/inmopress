@@ -1,0 +1,36 @@
+.inmopress-interactive-map {
+    margin: 2rem 0;
+}
+
+.inmopress-map-container {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.inmopress-map-popup {
+    padding: 0.5rem;
+    min-width: 200px;
+}
+
+.inmopress-map-popup h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+}
+
+.inmopress-map-popup h4 a {
+    color: #0073aa;
+    text-decoration: none;
+}
+
+.inmopress-map-popup h4 a:hover {
+    text-decoration: underline;
+}
+
+.inmopress-map-popup .price {
+    margin: 0;
+    font-weight: bold;
+    color: #0073aa;
+    font-size: 1.1rem;
+}

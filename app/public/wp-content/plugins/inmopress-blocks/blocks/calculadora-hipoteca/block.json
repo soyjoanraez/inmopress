@@ -1,0 +1,23 @@
+{
+    "name": "inmopress/calculadora-hipoteca",
+    "title": "Calculadora Hipoteca",
+    "description": "Calculadora financiera para estimar la cuota mensual.",
+    "category": "inmopress-blocks",
+    "icon": "calculator",
+    "keywords": [
+        "calculadora",
+        "hipoteca",
+        "financiacion"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "full",
+            "wide"
+        ],
+        "mode": false
+    }
+}

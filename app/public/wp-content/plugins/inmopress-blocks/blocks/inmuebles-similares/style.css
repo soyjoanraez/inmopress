@@ -1,0 +1,93 @@
+.inmopress-similares {
+    margin: 40px 0;
+}
+
+.similares-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-left: 5px solid #1e3a8a;
+    /* Primary Color */
+    padding-left: 15px;
+}
+
+.inmopress-similares .inmopress-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Reusing generic card styles if not available globally, defining strict scoped styles here just in case */
+
+.inmopress-similares .inmo-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.inmopress-similares .inmo-card:hover {
+    transform: translateY(-5px);
+}
+
+.inmopress-similares .inmo-card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.inmopress-similares .inmo-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.inmopress-similares .badget-status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #22c55e;
+    /* Green */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.inmopress-similares .inmo-card-content {
+    padding: 20px;
+}
+
+.inmopress-similares .inmo-card-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 5px;
+}
+
+.inmopress-similares .inmo-card-title {
+    font-size: 1.1rem;
+    margin: 0 0 10px 0;
+}
+
+.inmopress-similares .inmo-card-title a {
+    text-decoration: none;
+    color: #1f2937;
+}
+
+.inmopress-similares .inmo-card-location {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.inmopress-similares .inmo-card-features {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 15px;
+    font-size: 0.9rem;
+    color: #374151;
+}

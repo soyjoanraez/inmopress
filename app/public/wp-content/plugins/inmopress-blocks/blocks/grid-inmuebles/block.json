@@ -1,0 +1,25 @@
+{
+    "name": "acf/grid-inmuebles",
+    "title": "Grid Inmuebles",
+    "description": "Listado de inmuebles en formato grid con opciones de consulta.",
+    "style": "file:./style.css",
+    "category": "inmopress",
+    "icon": "grid-view",
+    "keywords": [
+        "grid",
+        "lista",
+        "inmuebles",
+        "propiedades"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "wide",
+            "full"
+        ],
+        "mode": true
+    }
+}

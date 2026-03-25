@@ -1,0 +1,330 @@
+/**
+ * Inmopress Dashboard - Tables Component
+ * Tablas modernas según GUIA_ESTILO_DASHBOARD.md
+ * Versión: 1.0.0
+ */
+
+/* ============================================
+   TABLE CONTAINER
+   ============================================ */
+
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================
+   TABLE BASE
+   ============================================ */
+
+table,
+.crm-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+/* ============================================
+   TABLE HEADER
+   ============================================ */
+
+thead,
+.crm-table thead {
+    background-color: var(--color-bg-table-header);
+}
+
+th,
+.crm-table th {
+    padding: var(--spacing-md) var(--spacing-md);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+th:first-child,
+.crm-table th:first-child {
+    padding-left: var(--spacing-lg);
+}
+
+th:last-child,
+.crm-table th:last-child {
+    padding-right: var(--spacing-lg);
+}
+
+/* Sortable header */
+th.sortable,
+.crm-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: calc(var(--spacing-md) + 20px);
+}
+
+th.sortable:hover,
+.crm-table th.sortable:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-border-light);
+}
+
+th.sortable::after,
+.crm-table th.sortable::after {
+    content: '↕';
+    position: absolute;
+    right: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    opacity: 0.5;
+}
+
+th.sortable.asc::after,
+.crm-table th.sortable.asc::after {
+    content: '↑';
+    opacity: 1;
+    color: var(--color-primary);
+}
+
+th.sortable.desc::after,
+.crm-table th.sortable.desc::after {
+    content: '↓';
+    opacity: 1;
+    color: var(--color-primary);
+}
+
+/* ============================================
+   TABLE BODY
+   ============================================ */
+
+tbody,
+.crm-table tbody {
+    background-color: var(--color-bg-card);
+}
+
+tr,
+.crm-table tr {
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background-color var(--transition-fast);
+}
+
+tr:last-child,
+.crm-table tr:last-child {
+    border-bottom: none;
+}
+
+tr:hover,
+.crm-table tr:hover {
+    background-color: var(--color-bg-main);
+}
+
+tr.selected,
+.crm-table tr.selected {
+    background-color: var(--color-primary-light);
+}
+
+td,
+.crm-table td {
+    padding: var(--spacing-md);
+    font-size: var(--font-size-body);
+    color: var(--color-text-primary);
+    vertical-align: middle;
+}
+
+td:first-child,
+.crm-table td:first-child {
+    padding-left: var(--spacing-lg);
+}
+
+td:last-child,
+.crm-table td:last-child {
+    padding-right: var(--spacing-lg);
+}
+
+/* ============================================
+   TABLE CELL CONTENT
+   ============================================ */
+
+td .badge,
+td .crm-badge,
+.crm-table td .badge,
+.crm-table td .crm-badge {
+    margin-right: var(--spacing-xs);
+}
+
+td .avatar,
+td .crm-avatar,
+.crm-table td .avatar,
+.crm-table td .crm-avatar {
+    margin-right: var(--spacing-sm);
+}
+
+td .btn-crm,
+.crm-table td .btn-crm {
+    margin-right: var(--spacing-xs);
+}
+
+td .btn-crm:last-child,
+.crm-table td .btn-crm:last-child {
+    margin-right: 0;
+}
+
+/* ============================================
+   TABLE ACTIONS COLUMN
+   ============================================ */
+
+.table-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.table-actions .btn-crm {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-small);
+}
+
+.table-actions .btn-crm.icon-only {
+    width: 32px;
+    height: 32px;
+}
+
+/* ============================================
+   TABLE EMPTY STATE
+   ============================================ */
+
+.table-empty {
+    padding: var(--spacing-2xl);
+    text-align: center;
+    color: var(--color-text-tertiary);
+}
+
+.table-empty .dashicons {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: var(--color-border);
+    margin-bottom: var(--spacing-md);
+}
+
+.table-empty p {
+    margin: 0;
+    font-size: var(--font-size-body);
+}
+
+/* ============================================
+   TABLE PAGINATION
+   ============================================ */
+
+.table-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-top: 1px solid var(--color-border-light);
+    background-color: var(--color-bg-main);
+}
+
+.table-pagination-info {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+}
+
+.table-pagination-nav {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.table-pagination-nav .btn-crm {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 var(--spacing-sm);
+    font-size: var(--font-size-small);
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE
+   ============================================ */
+
+@media (max-width: 767px) {
+    .table-wrapper {
+        margin: 0 calc(-1 * var(--container-padding-mobile));
+    }
+    
+    table,
+    .crm-table {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+    
+    th,
+    .crm-table th,
+    td,
+    .crm-table td {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-small);
+    }
+    
+    th:first-child,
+    .crm-table th:first-child,
+    td:first-child,
+    .crm-table td:first-child {
+        padding-left: var(--spacing-md);
+    }
+    
+    th:last-child,
+    .crm-table th:last-child,
+    td:last-child,
+    .crm-table td:last-child {
+        padding-right: var(--spacing-md);
+    }
+    
+    /* Ocultar columnas menos importantes en mobile */
+    .table-hide-mobile {
+        display: none;
+    }
+    
+    .table-pagination {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: stretch;
+    }
+    
+    .table-pagination-nav {
+        justify-content: center;
+    }
+}
+
+/* ============================================
+   STRIPED TABLE
+   ============================================ */
+
+table.striped tbody tr:nth-child(even),
+.crm-table.striped tbody tr:nth-child(even) {
+    background-color: var(--color-bg-main);
+}
+
+table.striped tbody tr:nth-child(even):hover,
+.crm-table.striped tbody tr:nth-child(even):hover {
+    background-color: var(--color-border-light);
+}
+
+/* ============================================
+   COMPACT TABLE
+   ============================================ */
+
+table.compact th,
+table.compact td,
+.crm-table.compact th,
+.crm-table.compact td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-small);
+}

@@ -1,0 +1,297 @@
+/**
+ * Inmopress Dashboard - Cards / Widgets Component
+ * Cards modernas según GUIA_ESTILO_DASHBOARD.md
+ * Versión: 1.0.0
+ */
+
+/* ============================================
+   CARD BASE
+   ============================================ */
+
+.crm-card {
+    background-color: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    padding: var(--card-padding);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border-card);
+    transition: all var(--transition-base);
+}
+
+.crm-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Card con estado activo/seleccionado */
+.crm-card.active {
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* ============================================
+   CARD VARIANTS
+   ============================================ */
+
+/* Metric Card (para KPIs) */
+.crm-card.metric-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.crm-card.metric-card .metric-value {
+    font-size: var(--font-size-kpi);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text-primary);
+}
+
+.crm-card.metric-card .metric-label {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.crm-card.metric-card .metric-change {
+    font-size: var(--font-size-small);
+    color: var(--color-success);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.crm-card.metric-card .metric-change.negative {
+    color: var(--color-danger);
+}
+
+/* Summary Card */
+.crm-card.summary-card {
+    padding: var(--spacing-lg);
+}
+
+.crm-card.summary-card h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.crm-card.summary-card p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-loose);
+}
+
+/* Info Card */
+.crm-card.info-card {
+    background-color: var(--color-info-bg);
+    border-color: var(--color-info);
+}
+
+.crm-card.info-card h3,
+.crm-card.info-card p {
+    color: var(--color-info);
+}
+
+/* Warning Card */
+.crm-card.warning-card {
+    background-color: var(--color-warning-bg);
+    border-color: var(--color-warning);
+}
+
+.crm-card.warning-card h3,
+.crm-card.warning-card p {
+    color: var(--color-warning);
+}
+
+/* Success Card */
+.crm-card.success-card {
+    background-color: var(--color-success-bg);
+    border-color: var(--color-success);
+}
+
+.crm-card.success-card h3,
+.crm-card.success-card p {
+    color: var(--color-success);
+}
+
+/* Danger Card */
+.crm-card.danger-card {
+    background-color: var(--color-danger-bg);
+    border-color: var(--color-danger);
+}
+
+.crm-card.danger-card h3,
+.crm-card.danger-card p {
+    color: var(--color-danger);
+}
+
+/* ============================================
+   CARD HEADER
+   ============================================ */
+
+.crm-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.crm-card-header h3 {
+    margin: 0;
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.crm-card-header .crm-card-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+/* ============================================
+   CARD BODY
+   ============================================ */
+
+.crm-card-body {
+    color: var(--color-text-primary);
+}
+
+.crm-card-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================
+   CARD FOOTER
+   ============================================ */
+
+.crm-card-footer {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE
+   ============================================ */
+
+@media (max-width: 767px) {
+    .crm-card {
+        padding: var(--card-padding-mobile);
+        box-shadow: var(--shadow-card);
+    }
+    
+    .crm-card.metric-card .metric-value {
+        font-size: 36px; /* Reducido para mobile */
+    }
+    
+    .crm-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .crm-card-header .crm-card-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+
+.crm-card.no-padding {
+    padding: 0;
+}
+
+.crm-card.no-shadow {
+    box-shadow: none;
+}
+
+.crm-card.no-border {
+    border: none;
+}
+
+.crm-card-header-title {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.crm-empty-message {
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* Agencies List Styles */
+.crm-agencies-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md-sm);
+}
+
+.crm-agency-item {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 0.6fr;
+    gap: var(--spacing-md-sm);
+    align-items: center;
+    padding: var(--spacing-md-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-base);
+}
+
+.crm-agency-item:hover {
+    background-color: var(--color-bg-main);
+    box-shadow: var(--shadow-sm);
+}
+
+.crm-agency-main strong {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-primary);
+}
+
+.crm-agency-email {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-secondary);
+}
+
+.crm-agency-info {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-secondary);
+}
+
+.crm-agency-info strong {
+    color: var(--color-text-primary);
+}
+
+.crm-agency-actions {
+    text-align: right;
+}
+
+.crm-empty-value {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-tertiary);
+}
+
+@media (max-width: 767px) {
+    .crm-agency-item {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+    
+    .crm-agency-actions {
+        text-align: left;
+    }
+}

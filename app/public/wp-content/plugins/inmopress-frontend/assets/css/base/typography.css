@@ -1,0 +1,235 @@
+/**
+ * Inmopress Dashboard - Typography
+ * Sistema tipográfico según GUIA_ESTILO_DASHBOARD.md
+ * Versión: 1.0.0
+ */
+
+/* Importar fuente Inter desde Google Fonts o usar fallbacks */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ============================================
+   TÍTULOS DESKTOP
+   ============================================ */
+
+h1, .h1 {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+h2, .h2 {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+h3, .h3 {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+h4, .h4 {
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+h5, .h5 {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+h6, .h6 {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+/* ============================================
+   TEXTO DE CUERPO
+   ============================================ */
+
+body,
+p,
+.text-body {
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-loose);
+    color: var(--color-text-primary);
+}
+
+.text-body-secondary {
+    color: var(--color-text-secondary);
+}
+
+.text-small {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-loose);
+    color: var(--color-text-secondary);
+}
+
+.text-caption {
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   NÚMEROS Y MÉTRICAS (KPIs)
+   ============================================ */
+
+.kpi-value,
+.metric-value {
+    font-size: var(--font-size-kpi);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.kpi-value-small {
+    font-size: 36px; /* 2.25rem */
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+}
+
+.kpi-label,
+.metric-label {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE
+   ============================================ */
+
+@media (max-width: 767px) {
+    h1, .h1 {
+        font-size: var(--font-size-h1-mobile);
+    }
+    
+    h2, .h2 {
+        font-size: var(--font-size-h2-mobile);
+    }
+    
+    h3, .h3 {
+        font-size: var(--font-size-h3-mobile);
+    }
+    
+    .kpi-value,
+    .metric-value {
+        font-size: 36px; /* Reducido para mobile */
+    }
+    
+    /* Asegurar tamaño mínimo de fuente para legibilidad */
+    body,
+    p,
+    .text-body,
+    input,
+    textarea,
+    select {
+        font-size: var(--font-size-body); /* 16px mínimo */
+    }
+}
+
+/* ============================================
+   UTILIDADES TIPOGRÁFICAS
+   ============================================ */
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.font-weight-regular {
+    font-weight: var(--font-weight-regular);
+}
+
+.font-weight-medium {
+    font-weight: var(--font-weight-medium);
+}
+
+.font-weight-semibold {
+    font-weight: var(--font-weight-semibold);
+}
+
+.font-weight-bold {
+    font-weight: var(--font-weight-bold);
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-lowercase {
+    text-transform: lowercase;
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+/* Colores de texto */
+.text-primary {
+    color: var(--color-text-primary);
+}
+
+.text-secondary {
+    color: var(--color-text-secondary);
+}
+
+.text-tertiary {
+    color: var(--color-text-tertiary);
+}
+
+.text-success {
+    color: var(--color-success);
+}
+
+.text-info {
+    color: var(--color-info);
+}
+
+.text-warning {
+    color: var(--color-warning);
+}
+
+.text-danger {
+    color: var(--color-danger);
+}
+
+.text-primary-accent {
+    color: var(--color-primary);
+}
+
+/* Monospace para números y datos */
+.text-mono {
+    font-family: var(--font-family-mono);
+    font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,106 @@
+.inmopress-filters {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.inmopress-filters-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.inmopress-filters.layout-vertical .inmopress-filters-form {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.inmopress-filter-field {
+    flex: 1;
+    min-width: 150px;
+}
+
+.inmopress-filters.layout-vertical .inmopress-filter-field {
+    flex: none;
+    width: 100%;
+}
+
+.inmopress-filter-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.inmopress-filter-field input,
+.inmopress-filter-field select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.inmopress-filter-range .inmopress-range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.inmopress-filter-range .inmopress-range-inputs input {
+    flex: 1;
+}
+
+.inmopress-filter-range .inmopress-range-inputs span {
+    color: #666;
+}
+
+.inmopress-filter-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.inmopress-filter-submit,
+.inmopress-filter-reset {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.inmopress-filter-submit {
+    background: #0073aa;
+    color: white;
+}
+
+.inmopress-filter-submit:hover {
+    background: #005a87;
+}
+
+.inmopress-filter-reset {
+    background: #ddd;
+    color: #333;
+}
+
+.inmopress-filter-reset:hover {
+    background: #ccc;
+}
+
+.inmopress-filters-results {
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .inmopress-filters-form {
+        flex-direction: column;
+    }
+    
+    .inmopress-filter-field {
+        min-width: 100%;
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "name": "inmopress/mapa-inmuebles",
+    "title": "Mapa de Inmueble",
+    "description": "Muestra la ubicación del inmueble en un mapa interactivo (Leaflet).",
+    "category": "inmopress-blocks",
+    "icon": "location-alt",
+    "keywords": [
+        "mapa",
+        "ubicacion",
+        "leaflet"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "full",
+            "wide"
+        ],
+        "mode": false
+    },
+    "attributes": {
+        "zoom": {
+            "type": "number",
+            "default": 15
+        }
+    }
+}
