@@ -1,0 +1,25 @@
+{
+    "name": "inmopress/video-tour",
+    "title": "Video / Tour 360",
+    "description": "Muestra el video o tour virtual del inmueble.",
+    "category": "inmopress-blocks",
+    "icon": "video-alt3",
+    "keywords": [
+        "video",
+        "tour",
+        "360",
+        "youtube",
+        "vimeo"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "full",
+            "wide"
+        ],
+        "mode": false
+    }
+}

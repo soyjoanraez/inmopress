@@ -1,0 +1,2964 @@
+{
+    "key": "group_property_consolidated",
+    "title": "Datos del Inmueble",
+    "fields": [
+        {
+            "key": "field_tab_informacion_basica",
+            "label": "Información Básica",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_publicada",
+            "label": "Publicada",
+            "name": "publicada",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_property_vendida",
+            "label": "Vendida",
+            "name": "vendida",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_reservada",
+            "label": "Reservada",
+            "name": "reservada",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_referencia",
+            "label": "Referencia",
+            "name": "referencia",
+            "type": "text",
+            "instructions": "La referencia será el título del post para facilitar las búsquedas",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "N4569Z",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_property_titulo_seo",
+            "label": "Título alternativo para SEO",
+            "name": "titulo_seo",
+            "type": "text",
+            "instructions": "Este será el nombre del inmueble que aparecerá en la URL junto con la referencia",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Casa de campo en Manises",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_property_proposito",
+            "label": "Propósito",
+            "name": "proposito",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "alquiler": "Alquiler",
+                "venta": "Venta"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_descripcion",
+            "label": "Descripción",
+            "name": "descripcion",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_tab_ubicacion",
+            "label": "Ubicación",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_direccion",
+            "label": "Dirección",
+            "name": "direccion",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Avenida Tir de Colom 6 46980 Paterna",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_property_provincia",
+            "label": "Provincia",
+            "name": "provincia",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "impress_province",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_property_poblacion",
+            "label": "Población",
+            "name": "poblacion",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "impress_municipality",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_property_zona",
+            "label": "Zona",
+            "name": "zona",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Mercado Colón etc",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_property_orientacion",
+            "label": "Orientación",
+            "name": "orientacion",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "norte": "Norte",
+                "sur": "Sur",
+                "este": "Este",
+                "oeste": "Oeste",
+                "noreste": "Noreste",
+                "noroeste": "Noroeste",
+                "sureste": "Sureste",
+                "suroeste": "Suroeste",
+                "este_oeste": "Este-Oeste",
+                "norte_sur": "Norte-Sur"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_tab_clasificacion",
+            "label": "Clasificación",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_tipo_vivienda",
+            "label": "Tipo de vivienda",
+            "name": "tipo_vivienda",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "impress_property_type",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_property_agrupacion",
+            "label": "Agrupación",
+            "name": "agrupacion",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "villas": "Villas",
+                "apartamentos": "Apartamentos",
+                "casas": "Casas",
+                "chalets": "Chalets",
+                "terrenos": "Terrenos",
+                "solares": "Solares"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_agrupacion_especial",
+            "label": "Agrupación especial",
+            "name": "agrupacion_especial",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "alquiler_vacacional": "Alquiler vacacional",
+                "frente_mar": "Frente al mar",
+                "estudiantes": "Para estudiantes",
+                "lujo": "De lujo",
+                "instalaciones_deportivas": "Con instalaciones deportivas",
+                "opcion_compra": "Con opción a compra"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_tab_caracteristicas",
+            "label": "Características",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_estado",
+            "label": "Estado",
+            "name": "estado",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "nuevo": "Nuevo",
+                "reformado": "Reformado",
+                "buen_estado": "Buen estado",
+                "para_reformar": "Para reformar",
+                "en_construccion": "En construcción",
+                "en_proyecto": "En proyecto"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_superficie_util",
+            "label": "Superficie útil",
+            "name": "superficie_util",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "m²",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_superficie_construida",
+            "label": "Superficie construida",
+            "name": "superficie_construida",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "m²",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_superficie_parcela",
+            "label": "Superficie parcela",
+            "name": "superficie_parcela",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "m²",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_plantas",
+            "label": "Plantas",
+            "name": "plantas",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_ano",
+            "label": "Año de construcción",
+            "name": "ano",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_dormitorios",
+            "label": "Dormitorios",
+            "name": "dormitorios",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_banos",
+            "label": "Baños",
+            "name": "banos",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_banos_suite",
+            "label": "Baños en suite",
+            "name": "banos_suite",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_cocinas",
+            "label": "Cocinas",
+            "name": "cocinas",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_salones",
+            "label": "Salones",
+            "name": "salones",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_balcones",
+            "label": "Balcones",
+            "name": "balcones",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_terrazas",
+            "label": "Terrazas",
+            "name": "terrazas",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_trasteros",
+            "label": "Trasteros",
+            "name": "trasteros",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_tab_instalaciones",
+            "label": "Instalaciones",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_certificacion_energetica",
+            "label": "Certificación energética",
+            "name": "certificacion_energetica",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "en_tramite": "En trámite",
+                "sin_certificacion": "Sin certificación",
+                "a": "A",
+                "b": "B",
+                "c": "C",
+                "d": "D",
+                "e": "E",
+                "f": "F",
+                "g": "G",
+                "pendiente_renovacion": "Pendiente renovación",
+                "caducada": "Caducada"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_ficha_energetica",
+            "label": "Ficha energética",
+            "name": "ficha_energetica",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "pdf"
+        },
+        {
+            "key": "field_property_calefaccion",
+            "label": "Calefacción",
+            "name": "calefaccion",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "individual": "Individual",
+                "central": "Central",
+                "gas_natural": "Gas natural",
+                "gasoleo": "Gasóleo",
+                "electrico": "Eléctrico",
+                "aerotermia": "Aerotermia",
+                "sin_calefaccion": "Sin calefacción"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_jardin",
+            "label": "Jardín",
+            "name": "jardin",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "privado": "Privado",
+                "comunitario": "Comunitario",
+                "patio_terraza": "Patio/terraza",
+                "zonas_verdes": "Zonas verdes"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_piscina",
+            "label": "Piscina",
+            "name": "piscina",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "privada": "Privada",
+                "comunitaria": "Comunitaria",
+                "aire_libre": "Aire libre",
+                "cubierta": "Cubierta",
+                "climatizada": "Climatizada",
+                "infinita": "Infinita"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_medida_piscina",
+            "label": "Medida Piscina",
+            "name": "medida_piscina",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_property_piscina",
+                        "operator": "!=",
+                        "value": ""
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "m²",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_garajes",
+            "label": "Garajes",
+            "name": "garajes",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_amueblado",
+            "label": "Amueblado",
+            "name": "amueblado",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "totalmente": "Totalmente",
+                "parcialmente": "Parcialmente",
+                "sin_amueblar": "Sin amueblar",
+                "lujo": "Lujo",
+                "basico": "Básico",
+                "moderno": "Moderno",
+                "clasico": "Clásico"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_estacionamiento",
+            "label": "Estacionamiento",
+            "name": "estacionamiento",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "pago": "Pago",
+                "publico": "Público",
+                "privado": "Privado",
+                "individual": "Individual",
+                "comunitario": "Comunitario",
+                "subterraneo": "Subterráneo",
+                "aire_libre": "Aire libre",
+                "cubierto": "Cubierto",
+                "calle": "Calle",
+                "24h": "24h",
+                "videovigilancia": "Videovigilancia"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 1,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_ventanas",
+            "label": "Ventanas",
+            "name": "ventanas",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "climalit": "Climalit",
+                "doble_cristal": "Doble cristal",
+                "pvc": "PVC",
+                "aluminio": "Aluminio",
+                "madera": "Madera",
+                "corredizas": "Corredizas",
+                "abatibles": "Abatibles",
+                "oscilobatientes": "Oscilobatientes"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 1,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_suelo",
+            "label": "Tipo suelo",
+            "name": "suelo",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "marmol": "Mármol",
+                "parquet": "Parquet",
+                "ceramicas": "Cerámicas",
+                "madera": "Madera",
+                "terrazo": "Terrazo",
+                "laminado": "Laminado",
+                "vinilo": "Vinilo",
+                "hormigon_pulido": "Hormigón pulido",
+                "moqueta": "Moqueta"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 1,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_ibi",
+            "label": "IBI",
+            "name": "ibi",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_property_impuesto_basura",
+            "label": "Impuesto basura",
+            "name": "impuesto_basura",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "180€ al año",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_property_gastos_comunidad",
+            "label": "Gastos comunidad",
+            "name": "gastos_comunidad",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "€",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_co2_emisiones",
+            "label": "CO2 Emisiones",
+            "name": "co2_emisiones",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_tab_caracteristicas_especiales",
+            "label": "Características Especiales",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_solo_vip",
+            "label": "Solo VIP",
+            "name": "solo_vip",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_exclusiva",
+            "label": "Exclusiva",
+            "name": "exclusiva",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_aire_acondicionado",
+            "label": "Aire acondicionado",
+            "name": "aire_acondicionado",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_barbacoa",
+            "label": "Barbacoa",
+            "name": "barbacoa",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_lavabajillas",
+            "label": "Lavavajillas",
+            "name": "lavabajillas",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_ascensor",
+            "label": "Ascensor",
+            "name": "ascensor",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_gimnasio",
+            "label": "Gimnasio",
+            "name": "gimnasio",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_encimera_granito",
+            "label": "Encimera de granito",
+            "name": "encimera_granito",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_lavanderia",
+            "label": "Lavandería",
+            "name": "lavanderia",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_solar",
+            "label": "Solar",
+            "name": "solar",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_spa",
+            "label": "Spa",
+            "name": "spa",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_minusvalidos",
+            "label": "Adaptado minusválidos",
+            "name": "minusvalidos",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_luminoso",
+            "label": "Luminoso",
+            "name": "luminoso",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_horno",
+            "label": "Horno",
+            "name": "horno",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_puerta_blindada",
+            "label": "Puerta blindada",
+            "name": "puerta_blindada",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_patio",
+            "label": "Patio",
+            "name": "patio",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_conserje",
+            "label": "Conserje",
+            "name": "conserje",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_buhardilla",
+            "label": "Buhardilla",
+            "name": "buhardilla",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_chimenea",
+            "label": "Chimenea",
+            "name": "chimenea",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_agua_potable",
+            "label": "Agua potable",
+            "name": "agua_potable",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_alarma",
+            "label": "Alarma",
+            "name": "alarma",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_armarios_empotrados",
+            "label": "Armarios empotrados",
+            "name": "armarios_empotrados",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_porche",
+            "label": "Porche",
+            "name": "porche",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_despensa",
+            "label": "Despensa",
+            "name": "despensa",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_portero_automatico",
+            "label": "Portero automático / video",
+            "name": "portero_automatico",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_jacuzzi",
+            "label": "Jacuzzi",
+            "name": "jacuzzi",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_sotano",
+            "label": "Sótano",
+            "name": "sotano",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_vistas_mar",
+            "label": "Vistas al mar",
+            "name": "vistas_mar",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_vistas_montana",
+            "label": "Vistas a la montaña",
+            "name": "vistas_montana",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_suelo_radiante",
+            "label": "Suelo radiante",
+            "name": "suelo_radiante",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_aislamiento_termico",
+            "label": "Aislamiento Térmico/Acústico",
+            "name": "aislamiento_termico",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_sistema_riego_automatico",
+            "label": "Sistema riego automático",
+            "name": "sistema_riego_automatico",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_internet",
+            "label": "Internet",
+            "name": "internet",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_sat",
+            "label": "SAT",
+            "name": "sat",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_vitroceramica",
+            "label": "Vitrocerámica",
+            "name": "vitroceramica",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_frigorifico",
+            "label": "Frigorífico",
+            "name": "frigorifico",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_microondas",
+            "label": "Microondas",
+            "name": "microondas",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_zona_infantil",
+            "label": "Zona infantil",
+            "name": "zona_infantil",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_tenis",
+            "label": "Tenis",
+            "name": "tenis",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_padel",
+            "label": "Padel",
+            "name": "padel",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_property_muebles_jardin",
+            "label": "Muebles jardín",
+            "name": "muebles_jardin",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_tab_distancias",
+            "label": "Distancias",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_autobus",
+            "label": "Autobús",
+            "name": "autobus",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_metro",
+            "label": "Metro",
+            "name": "metro",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_centros_escolares",
+            "label": "Centros escolares",
+            "name": "centros_escolares",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_supermercados",
+            "label": "Supermercados",
+            "name": "supermercados",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_centros_salud",
+            "label": "Centro de salud",
+            "name": "centros_salud",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_areas_verdes",
+            "label": "Áreas verdes",
+            "name": "areas_verdes",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_centros_comerciales",
+            "label": "Centros comerciales",
+            "name": "centros_comerciales",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_gimnasios",
+            "label": "Gimnasios",
+            "name": "gimnasios",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_farmacias",
+            "label": "Farmacia",
+            "name": "farmacias",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_teatros",
+            "label": "Teatro",
+            "name": "teatros",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_cines",
+            "label": "Cine",
+            "name": "cines",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1min": "1min",
+                "2min": "2min",
+                "3min": "3min",
+                "4min": "4min",
+                "5min": "5min",
+                "10min": "10min",
+                "15min": "15min",
+                "20min": "20min",
+                "25min": "25min",
+                "30min": "30min",
+                "35min": "35min",
+                "40min": "40min",
+                "45min": "45min",
+                "50min": "50min",
+                "55min": "55min",
+                "1h": "1h",
+                "1-2h": "1-2h",
+                "2-3h": "2-3h"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_tab_precios",
+            "label": "Precios y Condiciones",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_tab_precios_alquiler",
+            "label": "Alquiler",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_precio_alquiler_propietario",
+            "label": "Precio alquiler deseado propietario",
+            "name": "precio_alquiler_propietario",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "€",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_precio_alquiler",
+            "label": "Precio alquiler",
+            "name": "precio_alquiler",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "850",
+            "prepend": "",
+            "append": "€",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_deposito",
+            "label": "Depósito",
+            "name": "deposito",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "1000",
+            "prepend": "",
+            "append": "€",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_tipo_descuento_alquiler",
+            "label": "Tipo de descuento alquiler",
+            "name": "tipo_descuento_alquiler",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "cantidad": "Cantidad",
+                "porcentaje": "Porcentaje"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_cantidad_descuento_alquiler",
+            "label": "Cantidad descuento alquiler",
+            "name": "cantidad_descuento_alquiler",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_property_tipo_descuento_alquiler",
+                        "operator": "!=",
+                        "value": ""
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "5",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_tipo_comision_alquiler",
+            "label": "Tipo de comisión alquiler",
+            "name": "tipo_comision_alquiler",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "cantidad": "Cantidad",
+                "porcentaje": "Porcentaje"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_cantidad_comision_alquiler",
+            "label": "Cantidad de comisión alquiler",
+            "name": "cantidad_comision_alquiler",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_property_tipo_comision_alquiler",
+                        "operator": "!=",
+                        "value": ""
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "5",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_mascotas",
+            "label": "Mascotas permitidas",
+            "name": "mascotas",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "si": "Si",
+                "no": "No"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_periodo_pago",
+            "label": "Periodo de pago",
+            "name": "periodo_pago",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "semanal": "Semanal",
+                "mensual": "Mensual"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_plazo_minimo",
+            "label": "Plazo mínimo",
+            "name": "plazo_minimo",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "mensual": "Mensual",
+                "2_meses": "2 meses",
+                "3_meses": "3 meses",
+                "6_meses": "6 meses",
+                "anual": "Anual"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_seguro",
+            "label": "Seguro",
+            "name": "seguro",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "opcional": "Opcional",
+                "obligatorio": "Obligatorio",
+                "sin_seguro": "Sin seguro",
+                "incluido_precio": "Incluido en precio",
+                "cargo_arrendador": "A cargo arrendador",
+                "cargo_arrendatario": "A cargo arrendatario"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_fumar",
+            "label": "Fumar",
+            "name": "fumar",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_tab_precios_venta",
+            "label": "Venta",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_precio_venta_propietario",
+            "label": "Precio venta deseado propietario",
+            "name": "precio_venta_propietario",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "€",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_precio_minimo_venta",
+            "label": "Precio mínimo venta",
+            "name": "precio_minimo_venta",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "€",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_precio_venta",
+            "label": "Precio venta",
+            "name": "precio_venta",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "€",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_tipo_descuento_venta",
+            "label": "Tipo de descuento venta",
+            "name": "tipo_descuento_venta",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "cantidad": "Cantidad",
+                "porcentaje": "Porcentaje"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_cantidad_descuento_venta",
+            "label": "Cantidad descuento venta",
+            "name": "cantidad_descuento_venta",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_property_tipo_descuento_venta",
+                        "operator": "!=",
+                        "value": ""
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_property_tipo_comision_venta",
+            "label": "Tipo de comisión venta",
+            "name": "tipo_comision_venta",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "cantidad": "Cantidad",
+                "porcentaje": "Porcentaje"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_property_cantidad_comision_venta",
+            "label": "Cantidad de comisión venta",
+            "name": "cantidad_comision_venta",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_property_tipo_comision_venta",
+                        "operator": "!=",
+                        "value": ""
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_tab_relaciones",
+            "label": "Relaciones",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_agencia_colaboradora",
+            "label": "Agencia colaboradora",
+            "name": "agencia_colaboradora",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "impress_agency"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "object",
+            "ui": 1
+        },
+        {
+            "key": "field_property_agente",
+            "label": "Agente",
+            "name": "agente",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "impress_agent"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "object",
+            "ui": 1
+        },
+        {
+            "key": "field_property_propietario",
+            "label": "Propietario",
+            "name": "propietario",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "impress_owner"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "object",
+            "ui": 1
+        },
+        {
+            "key": "field_tab_media",
+            "label": "Media",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_property_fotos",
+            "label": "Galerías fotos",
+            "name": "fotos",
+            "type": "gallery",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "insert": "append",
+            "library": "all",
+            "min": "",
+            "max": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_property_videos",
+            "label": "Vídeo",
+            "name": "videos",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "impress_property"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}

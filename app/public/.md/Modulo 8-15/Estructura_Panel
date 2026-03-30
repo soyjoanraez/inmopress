@@ -1,0 +1,278 @@
+Buenísima pregunta, porque lo que ya tienes es muy sólido, pero para que Inmopress sea una versión “definitiva” de CRM inmobiliario (nivel SaaS serio), hay algunas piezas finales que conviene añadir o, al menos, dejar previstas aunque no se implementen en la v1.
+
+Te lo ordeno por capas, para que veas claramente qué está ya cubierto, qué falta, y qué es opcional pero muy potente.
+
+⸻
+
+🧠 Diagnóstico rápido
+
+✔ Arquitectura CPT + ACF → muy bien
+✔ SEO + IA + Rank Math → diferencial brutal
+✔ Licencias + Stripe → nivel SaaS real
+✔ Eventos + calendario → bien planteado
+
+👉 Lo que falta no es “más campos”, sino operativa diaria, control y escalabilidad.
+
+⸻
+
+1️⃣ Capa OPERATIVA (día a día del agente)
+
+Aquí hay 3 cosas importantes que aún no están explícitas.
+
+🔹 1. Historial de actividad (muy importante)
+
+Ahora tienes eventos, pero falta el log automático.
+
+👉 Añadir:
+CPT / sistema interno: impress_activity_log (o tabla propia)
+
+Registra automáticamente:
+	•	cambio de estado de una propiedad
+	•	cambio de precio
+	•	cambio de agente asignado
+	•	lead convertido a cliente
+	•	evento completado
+	•	edición relevante
+
+Esto es clave para:
+	•	control interno
+	•	conflictos entre agentes
+	•	auditoría
+	•	futuras métricas
+
+💡 No tiene por qué ser visible al cliente final, solo interno.
+
+⸻
+
+🔹 2. Estados avanzados de propiedad (pipeline)
+
+Ahora tienes “disponible / reservada / vendida”.
+Para un CRM real, conviene pipeline inmobiliario:
+
+Campos recomendados:
+	•	captación
+	•	en valoración
+	•	publicada
+	•	visita realizada
+	•	oferta recibida
+	•	negociación
+	•	reservada
+	•	vendida / alquilada
+	•	descartada
+
+👉 Esto permite:
+	•	métricas reales
+	•	embudos
+	•	informes
+
+⸻
+
+🔹 3. Notas internas privadas
+
+Separar:
+	•	Notas visibles al equipo
+	•	Notas privadas del agente
+
+Campo ACF:
+	•	internal_notes_private (solo autor)
+	•	internal_notes_team
+
+Esto es MUY usado en inmobiliarias reales.
+
+⸻
+
+2️⃣ Capa COMERCIAL (ventas y seguimiento)
+
+Aquí hay margen de oro.
+
+🔹 4. Ofertas / Propuestas
+
+Falta un elemento clave:
+
+👉 CPT: impress_offer
+
+Relaciona:
+	•	cliente
+	•	propiedad
+	•	importe
+	•	estado (pendiente / aceptada / rechazada)
+	•	fecha
+	•	notas
+
+Esto:
+	•	profesionaliza el CRM
+	•	evita “todo por WhatsApp”
+	•	te permite métricas de cierre
+
+⸻
+
+🔹 5. Seguimiento automático de leads
+
+Ahora el lead es manual. Puedes mejorar:
+
+Campos útiles:
+	•	fecha último contacto
+	•	días sin contacto (calculado)
+	•	prioridad automática (si > X días)
+
+Y reglas:
+	•	si un lead lleva 7 días sin contacto → alerta
+	•	si visita realizada y sin evento posterior → alerta
+
+Esto da sensación de CRM inteligente, aunque sea simple.
+
+⸻
+
+3️⃣ Capa USUARIO / UX (clave para adopción)
+
+Aquí es donde muchos CRMs fallan.
+
+🔹 6. Dashboard real por rol
+
+Conviene definir dashboards distintos:
+
+Agente
+	•	mis propiedades
+	•	mis eventos hoy
+	•	leads sin contactar
+	•	visitas esta semana
+
+Agencia
+	•	propiedades por estado
+	•	agentes más activos
+	•	embudo de ventas
+
+👉 Aunque sea con Query Loop + bloques, cambia totalmente la percepción del producto.
+
+⸻
+
+🔹 7. UX móvil “task-first”
+
+Tú lo mencionaste (y con razón).
+
+Recomendación:
+	•	vista móvil centrada en:
+	•	tareas de hoy
+	•	botón “completar”
+	•	nota rápida
+	•	no mostrar toda la ficha en móvil
+
+Esto no es técnico, es decisión de producto.
+
+⸻
+
+4️⃣ Capa DOCUMENTAL / LEGAL (muy real)
+
+Esto es lo que diferencia un CRM amateur de uno profesional.
+
+🔹 8. Documentos y adjuntos estructurados
+
+No solo “subir PDFs”.
+
+Añadir:
+	•	documentos por propiedad
+	•	documentos por cliente
+	•	tipo de documento (nota simple, contrato, DNI, etc.)
+	•	visibilidad (solo agencia / solo agente)
+
+👉 Puede ser:
+	•	ACF repeater
+	•	o CPT impress_document
+
+⸻
+
+🔹 9. Firmas y aceptación
+
+No hace falta DocuSign en la v1, pero sí:
+	•	checkbox de aceptación
+	•	registro de IP + fecha
+	•	fichero adjunto
+
+Esto te abre puertas B2B.
+
+⸻
+
+5️⃣ Capa ANALÍTICA (muy potente, aunque v1 light)
+
+No hace falta BI pesado, pero sí bases.
+
+🔹 10. Métricas mínimas
+
+Dejar preparados:
+	•	días en mercado
+	•	visitas por propiedad
+	•	ratio visita/oferta
+	•	ratio oferta/cierre
+
+Aunque solo muestres 2–3 gráficas al inicio.
+
+⸻
+
+6️⃣ Capa MULTIAGENCIA (ya prevista, pero ojo)
+
+Asegúrate de que:
+	•	TODAS las queries estén filtradas por agencia
+	•	TODAS las relaciones respeten el scope
+	•	no dependas solo de roles, sino también de agency_id
+
+Esto es crítico para SaaS.
+
+⸻
+
+7️⃣ Capa SEGURIDAD / ESCALABILIDAD
+
+Aquí ya estás muy bien, pero dos detalles más:
+
+🔹 11. Exportabilidad controlada
+
+Permitir:
+	•	exportar datos propios (GDPR)
+	•	pero nunca el core del sistema
+
+👉 CSV sí, JSON estructural no.
+
+⸻
+
+🔹 12. Versionado de esquema
+
+Piensa ya en:
+	•	versión del esquema ACF
+	•	migraciones futuras
+
+Esto evita dolores cuando tengas 100 clientes.
+
+⸻
+
+✅ Veredicto final honesto
+
+Con lo que ya tienes:
+🟢 CRM inmobiliario muy competitivo
+
+Añadiendo:
+	•	activity log
+	•	pipeline real
+	•	ofertas
+	•	dashboard por rol
+	•	documentos
+	•	métricas básicas
+
+🔵 CRM inmobiliario de nivel alto / SaaS serio
+
+Nada de esto rompe lo ya diseñado.
+Todo encaja perfectamente con:
+	•	WordPress
+	•	ACF
+	•	Gutenberg
+	•	Stripe
+	•	IA
+	•	modelo SaaS
+
+⸻
+
+Si quieres, en el siguiente paso puedo:
+	•	🔖 marcar qué entra en v1 / v2 / v3
+	•	🧩 actualizar el MD de CPTs con estos añadidos
+	•	🧠 ayudarte a priorizar por impacto/tiempo
+	•	🧱 diseñar el dashboard Gutenberg por rol
+
+Dime cómo quieres cerrar esta “versión definitiva” y lo dejamos redondo.

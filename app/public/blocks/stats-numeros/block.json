@@ -1,0 +1,16 @@
+{
+    "name": "acf/stats-numeros",
+    "title": "Stats/Números Destacados",
+    "description": "Bloque para mostrar estadísticas destacadas con números, iconos y descripciones",
+    "category": "inmopress",
+    "icon": "chart-bar",
+    "keywords": ["stats", "números", "estadísticas", "destacados"],
+    "supports": {
+        "align": ["wide", "full"],
+        "mode": true
+    },
+    "acf": {
+        "mode": "edit",
+        "renderTemplate": "render.php"
+    }
+}

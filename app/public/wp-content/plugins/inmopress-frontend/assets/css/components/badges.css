@@ -1,0 +1,173 @@
+/**
+ * Inmopress Dashboard - Badges / Pills Component
+ * Badges según GUIA_ESTILO_DASHBOARD.md
+ * Versión: 1.0.0
+ */
+
+/* ============================================
+   BADGE BASE
+   ============================================ */
+
+.badge,
+.crm-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--badge-padding-y) var(--badge-padding-x);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+}
+
+/* ============================================
+   BADGE VARIANTS BY COLOR
+   ============================================ */
+
+/* Success (Verde) */
+.badge-success,
+.crm-badge.success {
+    background-color: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+/* Info (Azul) */
+.badge-info,
+.crm-badge.info {
+    background-color: var(--color-info-bg);
+    color: var(--color-info);
+}
+
+/* Warning (Naranja) */
+.badge-warning,
+.crm-badge.warning {
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning);
+}
+
+/* Danger (Rojo) */
+.badge-danger,
+.crm-badge.danger {
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger);
+}
+
+/* Primary (Púrpura) */
+.badge-primary,
+.crm-badge.primary {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+/* Grey (Neutro) */
+.badge-grey,
+.badge-gray,
+.crm-badge.grey,
+.crm-badge.gray {
+    background-color: var(--color-bg-main);
+    color: var(--color-text-secondary);
+}
+
+/* Pink (Rosa) */
+.badge-pink,
+.crm-badge.pink {
+    background-color: var(--color-pink-bg);
+    color: var(--color-pink);
+}
+
+/* Yellow (Amarillo) */
+.badge-yellow,
+.crm-badge.yellow {
+    background-color: var(--color-yellow-bg);
+    color: var(--color-yellow);
+}
+
+/* ============================================
+   BADGE SIZES
+   ============================================ */
+
+.badge-small,
+.crm-badge.small {
+    padding: 4px 8px;
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-medium);
+}
+
+.badge-large,
+.crm-badge.large {
+    padding: var(--badge-padding-y-mobile) var(--badge-padding-x-mobile);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ============================================
+   BADGE WITH ICON
+   ============================================ */
+
+.badge .dashicons,
+.crm-badge .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    margin-right: var(--spacing-xs);
+    line-height: 1;
+}
+
+.badge-small .dashicons,
+.crm-badge.small .dashicons {
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+}
+
+/* ============================================
+   BADGE OUTLINE VARIANT
+   ============================================ */
+
+.badge-outline,
+.crm-badge.outline {
+    background-color: transparent;
+    border: 1px solid currentColor;
+}
+
+.badge-outline.badge-success,
+.crm-badge.outline.success {
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.badge-outline.badge-info,
+.crm-badge.outline.info {
+    border-color: var(--color-info);
+    color: var(--color-info);
+}
+
+.badge-outline.badge-warning,
+.crm-badge.outline.warning {
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+}
+
+.badge-outline.badge-danger,
+.crm-badge.outline.danger {
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+.badge-outline.badge-primary,
+.crm-badge.outline.primary {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE
+   ============================================ */
+
+@media (max-width: 767px) {
+    .badge,
+    .crm-badge {
+        padding: var(--badge-padding-y-mobile) var(--badge-padding-x-mobile);
+    }
+}

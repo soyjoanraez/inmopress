@@ -1,0 +1,25 @@
+{
+    "name": "acf/caracteristicas",
+    "title": "Características",
+    "description": "Muestra las características y comodidades del inmueble.",
+    "style": "file:./style.css",
+    "category": "inmopress",
+    "icon": "yes",
+    "keywords": [
+        "características",
+        "comodidades",
+        "amenidades",
+        "features"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "wide",
+            "full"
+        ],
+        "mode": true
+    }
+}

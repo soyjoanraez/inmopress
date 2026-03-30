@@ -1,0 +1,276 @@
+/* Zonas Destacadas Block Styles */
+
+.wp-block-inmopress-zonas-destacadas {
+    padding: 4rem 2rem;
+}
+
+.wp-block-inmopress-zonas-destacadas .zonas-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.wp-block-inmopress-zonas-destacadas .zonas-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.wp-block-inmopress-zonas-destacadas .zonas-titulo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.wp-block-inmopress-zonas-destacadas .zonas-descripcion {
+    font-size: 1.125rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Layout Grid */
+.wp-block-inmopress-zonas-destacadas .layout-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.wp-block-inmopress-zonas-destacadas .layout-grid.columns-2 {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.wp-block-inmopress-zonas-destacadas .layout-grid.columns-3 {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.wp-block-inmopress-zonas-destacadas .layout-grid.columns-4 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Layout Lista */
+.wp-block-inmopress-zonas-destacadas .layout-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.wp-block-inmopress-zonas-destacadas .layout-lista .zona-item {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.wp-block-inmopress-zonas-destacadas .layout-lista .zona-image {
+    width: 200px;
+    height: 150px;
+    flex-shrink: 0;
+}
+
+.wp-block-inmopress-zonas-destacadas .layout-lista .zona-content {
+    flex: 1;
+    position: relative;
+    background: transparent;
+    padding: 0;
+}
+
+/* Layout Carrusel */
+.wp-block-inmopress-zonas-destacadas .layout-carrusel {
+    position: relative;
+    overflow: hidden;
+}
+
+.wp-block-inmopress-zonas-destacadas .zonas-carrusel {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.wp-block-inmopress-zonas-destacadas .zonas-carrusel .zona-item {
+    flex: 0 0 calc(100% / var(--columnas, 3));
+    padding: 0 1rem;
+}
+
+.wp-block-inmopress-zonas-destacadas .carrusel-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.wp-block-inmopress-zonas-destacadas .carrusel-navigation button {
+    background: #007cba;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.wp-block-inmopress-zonas-destacadas .carrusel-navigation button:hover {
+    background: #005a87;
+    transform: scale(1.1);
+}
+
+/* Zona Item */
+.wp-block-inmopress-zonas-destacadas .zona-item {
+    position: relative;
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-item:hover .zona-image img {
+    transform: scale(1.1);
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-content {
+    color: white;
+    width: 100%;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-nombre {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-nombre a {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-nombre a:hover {
+    opacity: 0.8;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-texto {
+    margin-bottom: 1rem;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-contador {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    display: inline-flex;
+}
+
+.wp-block-inmopress-zonas-destacadas .contador-numero {
+    font-weight: 700;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-enlace {
+    margin-top: auto;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-link:hover {
+    border-bottom-color: white;
+    transform: translateX(5px);
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-link i {
+    transition: transform 0.3s ease;
+}
+
+.wp-block-inmopress-zonas-destacadas .zona-link:hover i {
+    transform: translateX(3px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .wp-block-inmopress-zonas-destacadas {
+        padding: 2rem 1rem;
+    }
+
+    .wp-block-inmopress-zonas-destacadas .zonas-titulo {
+        font-size: 2rem;
+    }
+
+    .wp-block-inmopress-zonas-destacadas .layout-grid.columns-2,
+    .wp-block-inmopress-zonas-destacadas .layout-grid.columns-3,
+    .wp-block-inmopress-zonas-destacadas .layout-grid.columns-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .wp-block-inmopress-zonas-destacadas .layout-lista .zona-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .wp-block-inmopress-zonas-destacadas .layout-lista .zona-image {
+        width: 100%;
+        height: 200px;
+    }
+
+    .wp-block-inmopress-zonas-destacadas .zona-overlay {
+        padding: 1.5rem;
+    }
+
+    .wp-block-inmopress-zonas-destacadas .zona-nombre {
+        font-size: 1.25rem;
+    }
+
+    .wp-block-inmopress-zonas-destacadas .zonas-carrusel .zona-item {
+        flex: 0 0 100%;
+    }
+}

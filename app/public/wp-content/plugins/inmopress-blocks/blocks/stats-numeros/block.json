@@ -1,0 +1,25 @@
+{
+    "name": "acf/stats-numeros",
+    "title": "Estadísticas",
+    "description": "Muestra estadísticas y números destacados.",
+    "style": "file:./style.css",
+    "category": "inmopress",
+    "icon": "chart-bar",
+    "keywords": [
+        "estadísticas",
+        "números",
+        "stats",
+        "métricas"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "wide",
+            "full"
+        ],
+        "mode": true
+    }
+}

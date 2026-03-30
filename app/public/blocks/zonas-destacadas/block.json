@@ -1,0 +1,16 @@
+{
+    "name": "acf/zonas-destacadas",
+    "title": "Zonas Destacadas",
+    "description": "Bloque para mostrar zonas o ciudades destacadas con imágenes y contador de inmuebles",
+    "category": "inmopress",
+    "icon": "location-alt",
+    "keywords": ["zonas", "ciudades", "ubicaciones", "áreas"],
+    "supports": {
+        "align": ["wide", "full"],
+        "mode": true
+    },
+    "acf": {
+        "mode": "edit",
+        "renderTemplate": "render.php"
+    }
+}

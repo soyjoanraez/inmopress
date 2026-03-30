@@ -1,0 +1,25 @@
+{
+    "name": "acf/galeria-inmueble",
+    "title": "Galería Inmueble",
+    "description": "Galería de imágenes avanzada para la ficha de inmueble.",
+    "style": "file:./style.css",
+    "category": "inmopress",
+    "icon": "format-gallery",
+    "keywords": [
+        "galería",
+        "fotos",
+        "imagenes",
+        "inmueble"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "wide",
+            "full"
+        ],
+        "mode": true
+    }
+}

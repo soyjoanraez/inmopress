@@ -1,0 +1,285 @@
+{
+    "key": "group_lead_config",
+    "title": "Leads - Configuración",
+    "fields": [
+        {
+            "key": "field_lead_newsletter_activo",
+            "label": "Newsletter activo",
+            "name": "newsletter_activo",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "ui": 1,
+            "default_value": 0,
+            "message": "",
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_lead_visitas_realizadas",
+            "label": "Visitas realizadas",
+            "name": "visitas_realizadas",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "row",
+            "button_label": "Añadir visita",
+            "min": 0,
+            "max": 0,
+            "rows_per_page": 20,
+            "collapsed": "",
+            "sub_fields": [
+                {
+                    "key": "field_lead_visita_inmueble",
+                    "label": "Inmueble",
+                    "name": "inmueble",
+                    "aria-label": "",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "40",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": [
+                        "impress_property"
+                    ],
+                    "return_format": "id",
+                    "taxonomy": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 1,
+                    "bidirectional_target": [],
+                    "parent_repeater": "field_lead_visitas_realizadas"
+                },
+                {
+                    "key": "field_lead_visita_fecha",
+                    "label": "Fecha",
+                    "name": "fecha",
+                    "aria-label": "",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "d\/m\/Y",
+                    "return_format": "d\/m\/Y",
+                    "first_day": 1,
+                    "default_to_current_date": 0,
+                    "parent_repeater": "field_lead_visitas_realizadas"
+                },
+                {
+                    "key": "field_lead_visita_valoracion",
+                    "label": "Valoración",
+                    "name": "valoracion",
+                    "aria-label": "",
+                    "type": "range",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "min": 1,
+                    "max": 5,
+                    "step": 1,
+                    "default_value": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_lead_visitas_realizadas"
+                },
+                {
+                    "key": "field_lead_visita_nota",
+                    "label": "Nota",
+                    "name": "nota",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_lead_visitas_realizadas"
+                }
+            ]
+        },
+        {
+            "key": "field_lead_solicitudes",
+            "label": "Solicitudes",
+            "name": "solicitudes",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "row",
+            "button_label": "Añadir solicitud",
+            "min": 0,
+            "max": 0,
+            "rows_per_page": 20,
+            "collapsed": "",
+            "sub_fields": [
+                {
+                    "key": "field_lead_solicitud_inmueble",
+                    "label": "Inmueble",
+                    "name": "inmueble",
+                    "aria-label": "",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": [
+                        "impress_property"
+                    ],
+                    "return_format": "id",
+                    "taxonomy": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 1,
+                    "bidirectional_target": [],
+                    "parent_repeater": "field_lead_solicitudes"
+                },
+                {
+                    "key": "field_lead_solicitud_fecha",
+                    "label": "Fecha",
+                    "name": "fecha",
+                    "aria-label": "",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "d\/m\/Y",
+                    "return_format": "d\/m\/Y",
+                    "first_day": 1,
+                    "default_to_current_date": 0,
+                    "parent_repeater": "field_lead_solicitudes"
+                },
+                {
+                    "key": "field_lead_solicitud_tipo",
+                    "label": "Tipo",
+                    "name": "tipo",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "info": "Info",
+                        "visita": "Visita",
+                        "tasacion": "Tasación"
+                    },
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "default_value": "",
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "return_format": "value",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "parent_repeater": "field_lead_solicitudes"
+                },
+                {
+                    "key": "field_lead_solicitud_estado",
+                    "label": "Estado",
+                    "name": "estado",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "pendiente": "Pendiente",
+                        "atendida": "Atendida",
+                        "cerrada": "Cerrada"
+                    },
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "default_value": "",
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "return_format": "value",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "parent_repeater": "field_lead_solicitudes"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "impress_lead"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "modified": 1770293748
+}

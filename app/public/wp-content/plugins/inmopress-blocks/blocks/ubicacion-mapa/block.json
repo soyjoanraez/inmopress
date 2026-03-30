@@ -1,0 +1,25 @@
+{
+    "name": "acf/ubicacion-mapa",
+    "title": "Ubicación y Mapa",
+    "description": "Muestra la ubicación del inmueble con mapa integrado.",
+    "style": "file:./style.css",
+    "category": "inmopress",
+    "icon": "location",
+    "keywords": [
+        "ubicación",
+        "mapa",
+        "dirección",
+        "localización"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": [
+            "wide",
+            "full"
+        ],
+        "mode": true
+    }
+}
