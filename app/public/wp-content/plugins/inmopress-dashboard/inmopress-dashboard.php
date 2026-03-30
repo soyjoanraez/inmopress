@@ -35,6 +35,57 @@ final class InmoPress_Dashboard {
 	}
 }
 
+add_action( 'init', 'inmopress_dashboard_register_post_types' );
+function inmopress_dashboard_register_post_types() {
+    register_post_type( 'impress_offer', array(
+        'labels' => array( 'name' => 'Ofertas', 'singular_name' => 'Oferta' ),
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => array( 'title', 'editor', 'custom-fields' ),
+        'menu_icon' => 'dashicons-tag',
+    ) );
+
+    register_post_type( 'impress_deal', array(
+        'labels' => array( 'name' => 'Negocios', 'singular_name' => 'Negocio' ),
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => array( 'title', 'editor', 'custom-fields' ),
+        'menu_icon' => 'dashicons-chart-line',
+    ) );
+
+    register_post_type( 'impress_invoice', array(
+        'labels' => array( 'name' => 'Facturas', 'singular_name' => 'Factura' ),
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => array( 'title', 'editor', 'custom-fields' ),
+        'menu_icon' => 'dashicons-media-document',
+    ) );
+
+    register_post_type( 'impress_event', array(
+        'labels' => array( 'name' => 'Agenda', 'singular_name' => 'Evento' ),
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => array( 'title', 'editor', 'custom-fields' ),
+        'menu_icon' => 'dashicons-calendar-alt',
+    ) );
+
+    register_post_type( 'impress_task', array(
+        'labels' => array( 'name' => 'Tareas', 'singular_name' => 'Tarea' ),
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => array( 'title', 'editor', 'custom-fields' ),
+        'menu_icon' => 'dashicons-editor-ul',
+    ) );
+
+    register_post_type( 'impress_demand', array(
+        'labels' => array( 'name' => 'Demandas', 'singular_name' => 'Demanda' ),
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => array( 'title', 'editor', 'custom-fields' ),
+        'menu_icon' => 'dashicons-filter',
+    ) );
+}
+
 function InmoPress_Dashboard_Init() {
     return InmoPress_Dashboard::instance();
 }
@@ -49,7 +100,51 @@ function inmopress_dashboard_register_rest_fields() {
         'update_callback' => null,
         'schema'          => null,
     ) );
+
+    register_rest_field( 'impress_client', 'ip_meta', array(
+        'get_callback'    => 'inmopress_dashboard_get_client_meta',
+        'update_callback' => null,
+        'schema'          => null,
+    ) );
+
+    $generic_meta_cpts = array('impress_offer', 'impress_deal', 'impress_invoice', 'impress_event', 'impress_task', 'impress_demand');
+    foreach ($generic_meta_cpts as $cpt) {
+        register_rest_field( $cpt, 'ip_meta', array(
+            'get_callback'    => 'inmopress_dashboard_get_generic_meta',
+            'update_callback' => null,
+            'schema'          => null,
+        ) );
+    }
 }
+
+function inmopress_dashboard_get_generic_meta( $object, $field_name, $request ) {
+    $meta = get_post_meta( $object['id'] );
+    $data = array();
+    foreach ( $meta as $key => $value ) {
+        if ( strpos( $key, '_' ) !== 0 ) {
+            $data[$key] = $value[0];
+        }
+    }
+    return $data;
+}
+
+function inmopress_dashboard_get_client_meta( $object, $field_name, $request ) {
+    $meta = get_post_meta( $object['id'] );
+    $data = array();
+    
+    foreach ( $meta as $key => $value ) {
+        if ( strpos( $key, '_' ) !== 0 ) {
+            $data[$key] = $value[0];
+        }
+    }
+
+    // Ensure common keys are always present even if they have weird names in DB
+    if (isset($meta['telefono']) && !isset($data['phone'])) $data['phone'] = $meta['telefono'][0];
+    if (isset($meta['client_type']) && !isset($data['type'])) $data['type'] = $meta['client_type'][0];
+
+    return $data;
+}
+
 
 function inmopress_dashboard_get_property_meta( $object, $field_name, $request ) {
     $meta = get_post_meta( $object['id'] );
@@ -83,7 +178,8 @@ function inmopress_dashboard_get_property_meta( $object, $field_name, $request )
             );
         }
     }
-    $data['gallery'] = $gallery;
+    // Añadir Propietario (ID)
+    $data['owner_id'] = get_post_meta( $object['id'], 'ip_owner_id', true );
     
     return $data;
 }
@@ -114,6 +210,50 @@ function inmopress_dashboard_register_custom_endpoints() {
         'permission_callback' => function () {
             return current_user_can('edit_posts');
         }
+    ));
+
+    register_rest_route('inmopress/v1', '/client/add', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_add_client_handler',
+        'permission_callback' => function () {
+            return current_user_can('edit_posts');
+        }
+    ));
+
+    register_rest_route('inmopress/v1', '/offer/save', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_save_offer_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/deal/save', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_save_deal_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/invoice/save', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_save_invoice_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/event/save', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_save_event_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/task/save', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_save_task_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/demand/save', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_save_demand_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
     ));
 }
 add_action('rest_api_init', 'inmopress_dashboard_register_custom_endpoints');
@@ -160,6 +300,9 @@ function inmopress_dashboard_add_property_handler($request) {
     }
     if (isset($params['size'])) {
         update_post_meta($post_id, 'superficie_construida', sanitize_text_field($params['size']));
+    }
+    if (isset($params['owner_id'])) {
+        update_post_meta($post_id, 'ip_owner_id', sanitize_text_field($params['owner_id']));
     }
 
     // 4. Procesar Múltiples Imágenes si se han subido
@@ -240,6 +383,9 @@ function inmopress_dashboard_update_property_handler($request) {
     if (isset($params['size'])) {
         update_post_meta($post_id, 'superficie_construida', sanitize_text_field($params['size']));
     }
+    if (isset($params['owner_id'])) {
+        update_post_meta($post_id, 'ip_owner_id', sanitize_text_field($params['owner_id']));
+    }
 
     // 4. Procesar nuevas imágenes (se añaden a las existentes)
     if (!empty($files['images'])) {
@@ -295,4 +441,190 @@ function inmopress_dashboard_delete_attachment_handler($request) {
         'message' => 'Imagen eliminada correctamente.'
     ));
 }
+
+function inmopress_dashboard_add_client_handler($request) {
+    $params = $request->get_params();
+
+    $post_data = array(
+        'post_title'   => sanitize_text_field($params['name'] ?? 'Cliente sin nombre'),
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_client',
+    );
+
+    $post_id = wp_insert_post($post_data);
+
+    if (is_wp_error($post_id)) {
+        return new WP_Error('db_error', 'No se pudo crear el cliente.', array('status' => 500));
+    }
+
+    // Guardar Metadatos
+    if (!empty($params['email'])) {
+        update_post_meta($post_id, 'email', sanitize_email($params['email']));
+    }
+    if (!empty($params['phone'])) {
+        update_post_meta($post_id, 'telefono', sanitize_text_field($params['phone']));
+        update_post_meta($post_id, 'phone', sanitize_text_field($params['phone']));
+    }
+    if (!empty($params['type'])) {
+        update_post_meta($post_id, 'client_type', sanitize_text_field($params['type']));
+    }
+    if (!empty($params['notes'])) {
+        update_post_meta($post_id, 'notes', sanitize_textarea_field($params['notes']));
+    }
+
+    return rest_ensure_response(array(
+        'success' => true,
+        'post_id' => $post_id,
+        'message' => 'Cliente añadido correctamente.'
+    ));
+}
+
+function inmopress_dashboard_save_offer_handler($request) {
+    $params = $request->get_params();
+    $offer_id = $params['id'] ?? 0;
+    
+    $post_data = array(
+        'post_title'   => sanitize_text_field($params['propertyTitle'] ?? 'Oferta'),
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_offer',
+    );
+    
+    if ($offer_id > 1000) { // Simple check if it's a real WP ID vs our fake initial IDs
+        $post_data['ID'] = $offer_id;
+        $post_id = wp_update_post($post_data);
+    } else {
+        $post_id = wp_insert_post($post_data);
+    }
+
+    if (is_wp_error($post_id)) return $post_id;
+
+    update_post_meta($post_id, 'propertyId', sanitize_text_field($params['propertyId'] ?? ''));
+    update_post_meta($post_id, 'client', sanitize_text_field($params['client'] ?? ''));
+    update_post_meta($post_id, 'amount', sanitize_text_field($params['amount'] ?? ''));
+    update_post_meta($post_id, 'status', sanitize_text_field($params['status'] ?? ''));
+    
+    return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
+function inmopress_dashboard_save_deal_handler($request) {
+    $params = $request->get_params();
+    $deal_id = $params['id'] ?? 0;
+    
+    $post_data = array(
+        'post_title'   => sanitize_text_field($params['title'] ?? 'Negocio'),
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_deal',
+    );
+    
+    if ($deal_id > 1000) {
+        $post_data['ID'] = $deal_id;
+        $post_id = wp_update_post($post_data);
+    } else {
+        $post_id = wp_insert_post($post_data);
+    }
+
+    if (is_wp_error($post_id)) return $post_id;
+
+    update_post_meta($post_id, 'client', sanitize_text_field($params['client'] ?? ''));
+    update_post_meta($post_id, 'stage', sanitize_text_field($params['stage'] ?? ''));
+    update_post_meta($post_id, 'amount', sanitize_text_field($params['amount'] ?? ''));
+    update_post_meta($post_id, 'notes', sanitize_textarea_field($params['notes'] ?? ''));
+    update_post_meta($post_id, 'label', sanitize_text_field($params['label'] ?? ''));
+    update_post_meta($post_id, 'labelColor', sanitize_text_field($params['labelColor'] ?? ''));
+    
+    return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
+function inmopress_dashboard_save_invoice_handler($request) {
+    $params = $request->get_params();
+    
+    $post_id = wp_insert_post(array(
+        'post_title'   => sanitize_text_field($params['id'] ?? 'Factura'),
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_invoice',
+    ));
+
+    if (is_wp_error($post_id)) return $post_id;
+
+    update_post_meta($post_id, 'date', sanitize_text_field($params['date'] ?? ''));
+    update_post_meta($post_id, 'client', sanitize_text_field($params['client'] ?? ''));
+    update_post_meta($post_id, 'property', sanitize_text_field($params['property'] ?? ''));
+    update_post_meta($post_id, 'amount', sanitize_text_field($params['amount'] ?? ''));
+    update_post_meta($post_id, 'status', sanitize_text_field($params['status'] ?? ''));
+    update_post_meta($post_id, 'type', sanitize_text_field($params['type'] ?? ''));
+    
+    return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
+function inmopress_dashboard_save_event_handler($request) {
+    $params = $request->get_params();
+    $event_id = $params['id'] ?? 0;
+    
+    $post_data = array(
+        'post_title'   => sanitize_text_field($params['title'] ?? 'Evento'),
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_event',
+    );
+    
+    if ($event_id > 1000) { $post_data['ID'] = $event_id; $post_id = wp_update_post($post_data); }
+    else { $post_id = wp_insert_post($post_data); }
+
+    if (is_wp_error($post_id)) return $post_id;
+
+    update_post_meta($post_id, 'date', sanitize_text_field($params['date'] ?? ''));
+    update_post_meta($post_id, 'time', sanitize_text_field($params['time'] ?? ''));
+    update_post_meta($post_id, 'client_id', sanitize_text_field($params['client_id'] ?? ''));
+    update_post_meta($post_id, 'property_id', sanitize_text_field($params['property_id'] ?? ''));
+    update_post_meta($post_id, 'type', sanitize_text_field($params['type'] ?? 'Visita'));
+    
+    return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
+function inmopress_dashboard_save_task_handler($request) {
+    $params = $request->get_params();
+    $task_id = $params['id'] ?? 0;
+    
+    $post_data = array(
+        'post_title'   => sanitize_text_field($params['title'] ?? 'Tarea'),
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_task',
+    );
+    
+    if ($task_id > 1000) { $post_data['ID'] = $task_id; $post_id = wp_update_post($post_data); }
+    else { $post_id = wp_insert_post($post_data); }
+
+    if (is_wp_error($post_id)) return $post_id;
+
+    update_post_meta($post_id, 'status', sanitize_text_field($params['status'] ?? 'pending'));
+    update_post_meta($post_id, 'due_date', sanitize_text_field($params['due_date'] ?? ''));
+    update_post_meta($post_id, 'linked_post_id', sanitize_text_field($params['linked_post_id'] ?? ''));
+    
+    return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
+function inmopress_dashboard_save_demand_handler($request) {
+    $params = $request->get_params();
+    $demand_id = $params['id'] ?? 0;
+    
+    $post_data = array(
+        'post_title'   => sanitize_text_field($params['title'] ?? 'Demanda'),
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_demand',
+    );
+    
+    if ($demand_id > 1000) { $post_data['ID'] = $demand_id; $post_id = wp_update_post($post_data); }
+    else { $post_id = wp_insert_post($post_data); }
+
+    if (is_wp_error($post_id)) return $post_id;
+
+    update_post_meta($post_id, 'client_id', sanitize_text_field($params['client_id'] ?? ''));
+    update_post_meta($post_id, 'min_price', sanitize_text_field($params['min_price'] ?? ''));
+    update_post_meta($post_id, 'max_price', sanitize_text_field($params['max_price'] ?? ''));
+    update_post_meta($post_id, 'city', sanitize_text_field($params['city'] ?? ''));
+    update_post_meta($post_id, 'rooms', sanitize_text_field($params['rooms'] ?? ''));
+    update_post_meta($post_id, 'parking', sanitize_text_field($params['parking'] ?? '0'));
+    
+    return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
 

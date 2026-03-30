@@ -105,8 +105,11 @@ body.toplevel_page_inmopress-dashboard {
             <ul>
                 <li class="active" data-view="dashboard"><span class="dashicons dashicons-chart-pie"></span> Resumen</li>
                 <li data-view="properties"><span class="dashicons dashicons-admin-home"></span> Inmuebles</li>
-                <li data-view="clients"><span class="dashicons dashicons-groups"></span> Clientes</li>
-                <li data-view="pipeline"><span class="dashicons dashicons-clipboard"></span> Pipeline y Ofertas</li>
+                <li data-view="pipeline"><span class="dashicons dashicons-forms"></span> Pipeline</li>
+                <li data-view="offers"><span class="dashicons dashicons-money-alt"></span> Ofertas</li>
+                <li data-view="agenda"><span class="dashicons dashicons-calendar-alt"></span> Agenda</li>
+                <li data-view="tasks"><span class="dashicons dashicons-editor-ul"></span> Tareas</li>
+                <li data-view="clients"><span class="dashicons dashicons-admin-users"></span> Clientes</li>
                 <li data-view="billing"><span class="dashicons dashicons-media-document"></span> Facturación</li>
                 <li data-view="settings"><span class="dashicons dashicons-admin-generic"></span> Ajustes</li>
             </ul>
