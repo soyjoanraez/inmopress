@@ -105,11 +105,15 @@ body.toplevel_page_inmopress-dashboard {
             <ul>
                 <li class="active" data-view="dashboard"><span class="dashicons dashicons-chart-pie"></span> Resumen</li>
                 <li data-view="properties"><span class="dashicons dashicons-admin-home"></span> Inmuebles</li>
-                <li data-view="pipeline"><span class="dashicons dashicons-forms"></span> Pipeline</li>
+                <li data-view="owners"><span class="dashicons dashicons-admin-users"></span> Propietarios</li>
+                <li data-view="leads"><span class="dashicons dashicons-megaphone"></span> Leads <span id="ip-leads-badge" style="display:none; background:#ef4444; color:white; border-radius:50%; width:8px; height:8px; margin-left:auto;"></span></li>
                 <li data-view="offers"><span class="dashicons dashicons-money-alt"></span> Ofertas</li>
                 <li data-view="agenda"><span class="dashicons dashicons-calendar-alt"></span> Agenda</li>
                 <li data-view="tasks"><span class="dashicons dashicons-editor-ul"></span> Tareas</li>
-                <li data-view="clients"><span class="dashicons dashicons-admin-users"></span> Clientes</li>
+                <li data-view="clients"><span class="dashicons dashicons-groups"></span> Clientes</li>
+                <li data-view="agents"><span class="dashicons dashicons-businessman"></span> Agentes</li>
+                <li data-view="agencies"><span class="dashicons dashicons-building"></span> Agencias</li>
+                <li data-view="communication"><span class="dashicons dashicons-email-alt"></span> Comunicación</li>
                 <li data-view="billing"><span class="dashicons dashicons-media-document"></span> Facturación</li>
                 <li data-view="settings"><span class="dashicons dashicons-admin-generic"></span> Ajustes</li>
             </ul>

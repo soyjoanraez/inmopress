@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     window.allInvoicesData = [];
     window.allEventsData = [];
     window.allTasksData = [];
+    window.allAgentsData = [];
+    window.allAgenciesData = [];
+    window.allLeadsData = [];
+    window.allOwnersData = [];
 
     navItems.forEach(item => {
         item.addEventListener('click', function() {
@@ -49,6 +53,18 @@ document.addEventListener('DOMContentLoaded', function() {
             fetchTasks();
         } else if (view === 'clients') {
             renderClients();
+        } else if (view === 'owners') {
+            renderOwners();
+        } else if (view === 'agents') {
+            fetchAgents();
+        } else if (view === 'agencies') {
+            fetchAgencies();
+        } else if (view === 'leads') {
+            fetchLeads();
+        } else if (view === 'communication') {
+            renderCommunication();
+        } else if (view === 'settings') {
+            renderSettings();
         } else if (view === 'billing') {
             fetchInvoices();
         } else {
@@ -1541,9 +1557,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div style="display: flex; flex-direction: column; gap: 24px;">
                         <!-- Tabs Navigation -->
                         <div style="display: flex; gap: 24px; border-bottom: 2px solid #e5e7eb; padding-bottom: 12px; margin-bottom: 8px;">
-                            <button onclick="window.switchClientTab('info')" class="client-tab active" id="tab-info" style="background: none; border: none; font-size: 15px; font-weight: 700; color: #3b82f6; cursor: pointer; border-bottom: 2px solid #3b82f6; padding-bottom: 12px; margin-bottom: -14px;">Información</button>
-                            <button onclick="window.switchClientTab('demands')" class="client-tab" id="tab-demands" style="background: none; border: none; font-size: 15px; font-weight: 600; color: #6b7280; cursor: pointer; padding-bottom: 12px;">Demandas (Matching)</button>
-                            <button onclick="window.switchClientTab('docs')" class="client-tab" id="tab-docs" style="background: none; border: none; font-size: 15px; font-weight: 600; color: #6b7280; cursor: pointer; padding-bottom: 12px;">Documentación</button>
+                            <button onclick="window.switchClientTab('info', ${client.id})" class="client-tab active" id="tab-info" style="background: none; border: none; font-size: 15px; font-weight: 700; color: #3b82f6; cursor: pointer; border-bottom: 2px solid #3b82f6; padding-bottom: 12px; margin-bottom: -14px;">Información</button>
+                            <button onclick="window.switchClientTab('communication', ${client.id})" class="client-tab" id="tab-comm" style="background: none; border: none; font-size: 15px; font-weight: 600; color: #6b7280; cursor: pointer; padding-bottom: 12px;">Comunicación</button>
+                            <button onclick="window.switchClientTab('demands', ${client.id})" class="client-tab" id="tab-demands" style="background: none; border: none; font-size: 15px; font-weight: 600; color: #6b7280; cursor: pointer; padding-bottom: 12px;">Demandas (Matching)</button>
+                            <button onclick="window.switchClientTab('docs', ${client.id})" class="client-tab" id="tab-docs" style="background: none; border: none; font-size: 15px; font-weight: 600; color: #6b7280; cursor: pointer; padding-bottom: 12px;">Documentación</button>
                         </div>
 
                         <div id="client-tab-content">
@@ -1580,27 +1597,146 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
 
-            // Tab switching logic for this specific view (localized)
-            window.switchClientTab = function(tabName) {
-                const buttons = document.querySelectorAll('.client-tab');
-                buttons.forEach(b => {
-                    b.style.color = '#6b7280';
-                    b.style.borderBottom = 'none';
-                    b.style.fontWeight = '600';
+            // Tab switching logic
+            window.switchClientTab = function(tab, clientId) {
+                const tabs = ['info', 'communication', 'demands', 'docs'];
+                const tabBtns = { 'info': 'tab-info', 'communication': 'tab-comm', 'demands': 'tab-demands', 'docs': 'tab-docs' };
+                
+                tabs.forEach(t => {
+                    const btn = document.getElementById(tabBtns[t]);
+                    if (btn) {
+                        btn.style.color = (t === tab) ? '#3b82f6' : '#6b7280';
+                        btn.style.borderBottom = (t === tab) ? '2px solid #3b82f6' : 'none';
+                        btn.style.fontWeight = (t === tab) ? '700' : '600';
+                        btn.style.marginBottom = (t === tab) ? '-14px' : '0';
+                    }
                 });
-                const activeBtn = document.getElementById('tab-' + tabName);
-                activeBtn.style.color = '#3b82f6';
-                activeBtn.style.borderBottom = '2px solid #3b82f6';
-                activeBtn.style.fontWeight = '700';
 
-                const tabContent = document.getElementById('client-tab-content');
-                if (tabName === 'info') {
-                    renderClientDetail(client); // Just re-render the whole thing or build internal fragments
-                } else if (tabName === 'demands') {
-                    renderClientDemands(client, tabContent);
-                } else if (tabName === 'docs') {
-                    renderClientDocuments(client, tabContent);
+                const content = document.getElementById('client-tab-content');
+                if (tab === 'info') {
+                    // Refrescamos o simplemente mostramos la info base
+                    location.reload(); // To simplify for now, or we could refactor renderClientDetail to be re-runnable partial
+                } else if (tab === 'communication') {
+                    renderClientCommunication(clientId);
+                } else if (tab === 'demands') {
+                    renderClientDemands(allClientsData.find(c => c.id === clientId), content);
+                } else if (tab === 'docs') {
+                    renderClientDocuments(allClientsData.find(c => c.id === clientId), content);
                 }
+            };
+
+            function renderClientCommunication(clientId) {
+                const content = document.getElementById('client-tab-content');
+                const client = allClientsData.find(c => c.id === clientId);
+                const clientEmail = client.ip_meta.email || '';
+                const clientPhone = client.ip_meta.telefono || client.ip_meta.phone || '';
+
+                content.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+                        <div style="background: #f9fafb; padding: 24px; border-radius: 12px; border: 1px solid #e5e7eb;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 700; color: #111827;">Registrar / Enviar Comunicación</h4>
+                            <form onsubmit="window.sendClientMessage(event, ${clientId})">
+                                <input type="hidden" name="client_id" value="${clientId}">
+                                <input type="hidden" name="to" value="${clientEmail}">
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                                    <div>
+                                        <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Canal</label>
+                                        <select name="type" id="comm-type-select" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; background: white;">
+                                            <option value="Email">📧 Email</option>
+                                            <option value="WhatsApp">💬 WhatsApp</option>
+                                            <option value="Llamada">📞 Llamada</option>
+                                            <option value="Nota">📝 Nota Interna</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Asunto / Título</label>
+                                        <input type="text" name="subject" required placeholder="Ej: Nueva propuesta" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px;">
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 16px;">
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Contenido</label>
+                                    <textarea name="message" required rows="4" placeholder="Escribe aquí el contenido..." style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px;"></textarea>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                                    ${clientPhone ? `<button type="button" onclick="window.sendWhatsApp('${clientPhone}')" style="background: #25d366; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;"><span class="dashicons dashicons-whatsapp"></span> WhatsApp</button>` : ''}
+                                    <button type="submit" id="comm-submit-btn" style="background: #1e3a8a; color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                        <span class="dashicons dashicons-email"></span> Procesar / Enviar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; padding: 24px;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 700; color: #111827;">Historial de Comunicación</h4>
+                            <div id="client-comm-history" style="display: flex; flex-direction: column; gap: 12px;">
+                                <p style="color: #9ca3af; text-align: center; padding: 20px;">Cargando mensajes...</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                fetch(inmoPressDashboard.rest_url + 'wp/v2/impress_message?ip_client_id=' + clientId, { headers: { 'X-WP-Nonce': inmoPressDashboard.nonce } })
+                .then(res => res.json())
+                .then(messages => {
+                    const history = document.getElementById('client-comm-history');
+                    if (messages.length === 0) {
+                        history.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 20px;">No hay historial de comunicación todavía.</p>';
+                        return;
+                    }
+                    history.innerHTML = messages.map(m => `
+                        <div style="padding: 12px; border-radius: 8px; background: #f3f4f6; border-left: 4px solid #3b82f6;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                <span style="font-weight: 700; font-size: 13px;">${m.title.rendered}</span>
+                                <span style="font-size: 11px; color: #9ca3af;">${new Date(m.date).toLocaleString()}</span>
+                            </div>
+                            <div style="font-size: 13px; color: #4b5563;">${m.content.rendered}</div>
+                        </div>
+                    `).join('');
+                });
+            }
+
+            window.sendClientMessage = function(e, clientId) {
+                e.preventDefault();
+                const fd = new FormData(e.target);
+                const type = fd.get('type');
+                const btn = document.getElementById('comm-submit-btn');
+                const originalText = btn.innerHTML;
+                
+                btn.innerHTML = 'Procesando...';
+                btn.disabled = true;
+
+                // Si es Email, usamos el endpoint de envío. Si no, solo logueamos.
+                const endpoint = (type === 'Email') ? 'send-email' : 'log';
+                if (endpoint === 'log') {
+                    fd.append('content', fd.get('message')); // Mapear para el handler de log
+                }
+
+                fetch(inmoPressDashboard.rest_url + 'inmopress/v1/communication/' + endpoint, {
+                    method: 'POST',
+                    headers: { 'X-WP-Nonce': inmoPressDashboard.nonce },
+                    body: fd
+                }).then(res => res.json()).then(data => {
+                    if (data.success) {
+                        alert(type === 'Email' ? 'Email enviado y registrado.' : 'Comunicación registrada correctamente.');
+                        e.target.reset();
+                        renderClientCommunication(clientId);
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }).catch(err => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+            };
+
+            window.sendWhatsApp = function(phone) {
+                const msg = encodeURIComponent("Hola, te contacto desde InmoPress...");
+                window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${msg}`, '_blank');
             };
         }
 
@@ -2414,6 +2550,397 @@ document.addEventListener('DOMContentLoaded', function() {
             fd.append('status', 'completed');
             fetch(inmoPressDashboard.rest_url + 'inmopress/v1/task/save', { method: 'POST', headers: { 'X-WP-Nonce': inmoPressDashboard.nonce }, body: fd });
         }
+    };
+
+    // ------------------------------------------------------------------------
+    // PROPIETARIOS (Módulo 1)
+    // ------------------------------------------------------------------------
+    function renderOwners() {
+        container.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 style="margin: 0; font-size: 28px; color: #111827; font-weight: 700;">Gestión de Propietarios</h2>
+                <button onclick="window.openAddClientModal()" style="background: #1e3a8a; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                    <span class="dashicons dashicons-plus-alt2"></span> Nuevo Propietario
+                </button>
+            </div>
+            
+            <div id="ip-owners-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;">
+                <div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #6b7280;">Cargando propietarios...</div>
+            </div>
+        `;
+
+        // Si no hay clientes cargados, los traemos
+        if (allClientsData.length === 0) {
+            fetch(inmoPressDashboard.rest_url + 'wp/v2/impress_client?_embed&per_page=100', { headers: { 'X-WP-Nonce': inmoPressDashboard.nonce } })
+            .then(res => res.json())
+            .then(data => {
+                allClientsData = data;
+                updateOwnersGrid();
+            });
+        } else {
+            updateOwnersGrid();
+        }
+    }
+
+    function updateOwnersGrid() {
+        const grid = document.getElementById('ip-owners-grid');
+        const owners = allClientsData.filter(c => (c.ip_meta.type || c.ip_meta.client_type) === 'Propietario');
+        
+        if (owners.length === 0) {
+            grid.innerHTML = '<div style="grid-column:1/-1; background:white; padding:40px; border-radius:12px; text-align:center; border:1px solid #e5e7eb;">No hay propietarios registrados todavía.</div>';
+            return;
+        }
+
+        grid.innerHTML = owners.map(o => {
+            const props = window.allPropertiesData.filter(p => p.ip_meta.owner_id == o.id);
+            return `
+                <div onclick="viewClient(${o.id})" style="background: white; border-radius: 16px; border: 1px solid #e5e7eb; padding: 24px; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <div style="width: 48px; height: 48px; border-radius: 12px; background: #eff6ff; color: #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">${o.title.rendered.charAt(0)}</div>
+                        <div>
+                            <div style="font-weight: 700; color: #111827; font-size: 16px;">${o.title.rendered}</div>
+                            <div style="font-size: 13px; color: #6b7280;">Propietario</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding-top: 16px; border-top: 1px solid #f3f4f6;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; color: #6b7280; font-weight: 600; text-transform: uppercase;">Inmuebles</div>
+                            <div style="font-size: 18px; font-weight: 800; color: #1e3a8a;">${props.length}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; color: #6b7280; font-weight: 600; text-transform: uppercase;">Estado</div>
+                            <div style="font-size: 14px; font-weight: 700; color: #10b981; margin-top: 2px;">Activo</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ------------------------------------------------------------------------
+    // AGENTES Y AGENCIAS (Módulos 3 y 4)
+    // ------------------------------------------------------------------------
+    function fetchAgents() {
+        container.innerHTML = `<div style="padding: 100px; text-align: center;"><span class="dashicons dashicons-update" style="animation: spin 2s linear infinite;"></span> Cargando agentes...</div>`;
+        fetch(inmoPressDashboard.rest_url + 'wp/v2/impress_agent?_embed&per_page=100', { headers: { 'X-WP-Nonce': inmoPressDashboard.nonce } })
+        .then(res => res.json())
+        .then(data => {
+            window.allAgentsData = data;
+            renderAgents();
+        });
+    }
+
+    function renderAgents() {
+        container.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+                <h2 style="margin: 0; font-size: 28px; color: #111827; font-weight: 700;">Equipo de Agentes</h2>
+                <button onclick="window.openAddAgentModal()" style="background: #1e3a8a; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                    <span class="dashicons dashicons-plus-alt2"></span> Nuevo Agente
+                </button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+                ${window.allAgentsData.map(a => `
+                    <div style="background: white; border-radius: 16px; border: 1px solid #e5e7eb; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                        <div style="height: 80px; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);"></div>
+                        <div style="padding: 24px; text-align: center; margin-top: -60px;">
+                            <div style="width: 80px; height: 80px; border-radius: 50%; background: #fff; padding: 4px; margin: 0 auto 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                <div style="width: 100%; height: 100%; border-radius: 50%; background: #f3f4f6; color: #1e3a8a; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 800;">${a.title.rendered.charAt(0)}</div>
+                            </div>
+                            <h3 style="margin: 0; font-size: 18px; color: #111827; font-weight: 700;">${a.title.rendered}</h3>
+                            <p style="margin: 4px 0 20px; color: #6b7280; font-size: 14px;">${a.ip_meta.cargo || 'Agente Inmobiliario'}</p>
+                            <div style="display: flex; gap: 8px; justify-content: center;">
+                                <button style="flex:1; border: 1px solid #d1d5db; background: white; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Perfil</button>
+                                <button style="flex:1; border: 1px solid #d1d5db; background: white; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Asignar</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+                ${window.allAgentsData.length === 0 ? '<div style="grid-column:1/-1; background:white; padding:40px; border-radius:12px; text-align:center; border:1px solid #e5e7eb;">No hay agentes registrados.</div>' : ''}
+            </div>
+        `;
+    }
+
+    function fetchAgencies() {
+        container.innerHTML = `<div style="padding: 100px; text-align: center;"><span class="dashicons dashicons-update" style="animation: spin 2s linear infinite;"></span> Cargando agencias...</div>`;
+        fetch(inmoPressDashboard.rest_url + 'wp/v2/impress_agency?_embed&per_page=100', { headers: { 'X-WP-Nonce': inmoPressDashboard.nonce } })
+        .then(res => res.json())
+        .then(data => {
+            window.allAgenciesData = data;
+            renderAgencies();
+        });
+    }
+
+    function renderAgencies() {
+        container.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+                <h2 style="margin: 0; font-size: 28px; color: #111827; font-weight: 700;">Agencias Colaboradoras</h2>
+                <button onclick="window.openAddAgencyModal()" style="background: #1e3a8a; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                    <span class="dashicons dashicons-plus-alt2"></span> Nueva Agencia
+                </button>
+            </div>
+            
+            <div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="background: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+                            <th style="padding: 16px 24px; font-size: 12px; font-weight: 700; color: #4b5563; text-transform: uppercase;">Nombre de Agencia</th>
+                            <th style="padding: 16px 24px; font-size: 12px; font-weight: 700; color: #4b5563; text-transform: uppercase;">Contacto</th>
+                            <th style="padding: 16px 24px; font-size: 12px; font-weight: 700; color: #4b5563; text-transform: uppercase;">Colaboraciones</th>
+                            <th style="padding: 16px 24px; font-size: 12px; font-weight: 700; color: #4b5563; text-transform: uppercase; text-align: right;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${window.allAgenciesData.map(a => `
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <td style="padding: 16px 24px;">
+                                    <div style="font-weight: 700; color: #111827;">${a.title.rendered}</div>
+                                    <div style="font-size: 12px; color: #6b7280;">${a.ip_meta.ciudad || 'Ubicación...'}</div>
+                                </td>
+                                <td style="padding: 16px 24px; color: #374151;">${a.ip_meta.telefono || '-'}<br>${a.ip_meta.email || '-'}</td>
+                                <td style="padding: 16px 24px;"><span style="background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;">3 activas</span></td>
+                                <td style="padding: 16px 24px; text-align: right;">
+                                    <button style="background:none; border:none; color:#3b82f6; cursor:pointer; font-weight:600;">Ver Detalles</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                        ${window.allAgenciesData.length === 0 ? '<tr><td colspan="4" style="padding:40px; text-align:center; color:#6b7280;">No hay agencias colaboradoras registradas.</td></tr>' : ''}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    // ------------------------------------------------------------------------
+    // LEADS (Módulo 5)
+    // ------------------------------------------------------------------------
+    function fetchLeads() {
+        container.innerHTML = `<div style="padding: 100px; text-align: center;"><span class="dashicons dashicons-update" style="animation: spin 2s linear infinite;"></span> Cargando Leads...</div>`;
+        fetch(inmoPressDashboard.rest_url + 'wp/v2/impress_lead?_embed&per_page=100', { headers: { 'X-WP-Nonce': inmoPressDashboard.nonce } })
+        .then(res => res.json())
+        .then(data => {
+            window.allLeadsData = data;
+            renderLeads();
+            // Actualizar badge del sidebar si hay leads nuevos
+            const newLeads = data.filter(l => l.ip_meta.status === 'nuevo' || !l.ip_meta.status);
+            document.getElementById('ip-leads-badge').style.display = newLeads.length > 0 ? 'block' : 'none';
+        });
+    }
+
+    function renderLeads() {
+        container.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+                <div>
+                    <h2 style="margin: 0; font-size: 28px; color: #111827; font-weight: 700;">Leads e Interesados</h2>
+                    <p style="color: #6b7280; margin-top: 8px;">Gestiona las solicitudes entrantes de portales y web.</p>
+                </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                ${window.allLeadsData.map(l => {
+                    const isNew = l.ip_meta.status === 'nuevo' || !l.ip_meta.status;
+                    return `
+                        <div style="background: white; border-radius: 12px; border: 1px solid ${isNew ? '#3b82f6' : '#e5e7eb'}; padding: 20px; display: flex; align-items: center; gap: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: relative; overflow: hidden;">
+                            ${isNew ? '<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #3b82f6;"></div>' : ''}
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                                    <h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #111827;">${l.title.rendered}</h3>
+                                    ${isNew ? '<span style="background: #ef4444; color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase;">¡NUEVO!</span>' : ''}
+                                </div>
+                                <div style="display: flex; gap: 16px; color: #6b7280; font-size: 13px;">
+                                    <span style="display: flex; align-items: center; gap: 4px;"><span class="dashicons dashicons-email" style="font-size: 14px; width: 14px; height: 14px;"></span> ${l.ip_meta.email || '-'}</span>
+                                    <span style="display: flex; align-items: center; gap: 4px;"><span class="dashicons dashicons-phone" style="font-size: 14px; width: 14px; height: 14px;"></span> ${l.ip_meta.telefono || '-'}</span>
+                                    <span style="display: flex; align-items: center; gap: 4px;"><span class="dashicons dashicons-calendar-alt" style="font-size: 14px; width: 14px; height: 14px;"></span> ${new Date(l.date).toLocaleDateString()}</span>
+                                </div>
+                            </div>
+                            <div style="flex: 1; color: #4b5563; font-size: 14px;">
+                                <strong>Interés:</strong> ${l.ip_meta.property_ref || 'Inmueble General'}
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button onclick="window.contactLead(${l.id})" style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px;">Contactar</button>
+                                <button onclick="window.dismissLead(${l.id})" style="background: white; border: 1px solid #d1d5db; color: #4b5563; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px;">Descartar</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+                ${window.allLeadsData.length === 0 ? '<div style="background:white; padding:60px; border-radius:16px; text-align:center; border:2px dashed #d1d5db; color:#6b7280;">No hay nuevos leads en este momento.</div>' : ''}
+            </div>
+        `;
+    }
+
+    // ------------------------------------------------------------------------
+    // COMUNICACIÓN Y SMTP (Módulos 2, 6)
+    // ------------------------------------------------------------------------
+    function renderCommunication() {
+        container.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+                <h2 style="margin: 0; font-size: 28px; color: #111827; font-weight: 700;">Centro de Comunicación</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px; min-height: 600px;">
+                <div style="background: white; border-radius: 16px; border: 1px solid #e5e7eb; overflow: hidden; display: flex; flex-direction: column;">
+                    <div style="padding: 20px; border-bottom: 1px solid #e5e7eb; background: #f9fafb;">
+                        <input type="text" placeholder="Buscar conversaciones..." style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                    </div>
+                    <div id="ip-comm-list" style="flex-grow: 1; overflow-y: auto;">
+                        <div style="padding: 40px; text-align: center; color: #9ca3af;">Cargando historial...</div>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 16px; border: 1px solid #e5e7eb; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #9ca3af;">
+                    <span class="dashicons dashicons-email-alt" style="font-size: 64px; width: 64px; height: 64px; margin-bottom: 16px;"></span>
+                    <p style="font-size: 18px; font-weight: 600;">Selecciona una conversación para leer</p>
+                </div>
+            </div>
+        `;
+
+        fetch(inmoPressDashboard.rest_url + 'wp/v2/impress_message?_embed&per_page=50', { headers: { 'X-WP-Nonce': inmoPressDashboard.nonce } })
+        .then(res => res.json())
+        .then(data => {
+            const list = document.getElementById('ip-comm-list');
+            list.innerHTML = data.map(m => {
+                const client = allClientsData.find(c => c.id == m.ip_meta.ip_client_id);
+                return `
+                    <div style="padding: 16px 20px; border-bottom: 1px solid #f3f4f6; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f9fafb'" onmouseout="this.style.background='none'">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-weight: 700; color: #111827; font-size: 14px;">${client ? client.title.rendered : 'Interesado Desc.'}</span>
+                            <span style="font-size: 11px; color: #9ca3af;">${new Date(m.date).toLocaleDateString()}</span>
+                        </div>
+                        <div style="font-size: 13px; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            ${m.content.rendered.replace(/<[^>]*>?/gm, '').substring(0, 60)}...
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            if (data.length === 0) list.innerHTML = '<div style="padding:40px; text-align:center; color:#9ca3af;">No hay mensajes registrados.</div>';
+        });
+    }
+
+    function renderSettings() {
+        container.innerHTML = `
+            <div style="margin-bottom: 32px;">
+                <h2 style="margin: 0; font-size: 28px; color: #111827; font-weight: 700;">Ajustes del Dashboard</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 250px 1fr; gap: 40px;">
+                <div style="border-right: 1px solid #e5e7eb;">
+                    <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+                        <li style="padding:12px 20px; border-radius:8px; background:#eff6ff; color:#1e3a8a; font-weight:700; cursor:pointer;">📧 Configuración SMTP</li>
+                        <li style="padding:12px 20px; border-radius:8px; color:#4b5563; font-weight:600; cursor:pointer;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='none'">👤 Perfil de Agencia</li>
+                        <li style="padding:12px 20px; border-radius:8px; color:#4b5563; font-weight:600; cursor:pointer;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='none'">🔗 Integraciones XML</li>
+                    </ul>
+                </div>
+                
+                <div style="background: white; border-radius: 16px; border: 1px solid #e5e7eb; padding: 32px;">
+                    <h3 style="margin: 0 0 24px 0; font-size: 20px; font-weight: 700; color: #111827;">Configuración de Correo (SMTP)</h3>
+                    <p style="color: #6b7280; margin-bottom: 24px; font-size: 14px;">Configura tu servidor de correo para enviar propuestas y comunicaciones directamente desde InmoPress.</p>
+                    
+                    <form id="ip-smtp-form" onsubmit="window.saveSMTPSettings(event)">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                            <div style="grid-column: 1 / -1;">
+                                <label style="display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 8px;">Nombre Remitente</label>
+                                <input type="text" name="name" id="smtp-name" style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 8px;">Servidor SMTP (Host)</label>
+                                <input type="text" name="host" id="smtp-host" placeholder="smtp.ejemplo.com" style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 8px;">Puerto</label>
+                                <input type="text" name="port" id="smtp-port" value="587" style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 8px;">Usuario (Email)</label>
+                                <input type="email" name="user" id="smtp-user" style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 8px;">Contraseña</label>
+                                <input type="password" name="pass" id="smtp-pass" style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px;">
+                            </div>
+                        </div>
+                        <button type="submit" style="background: #1e3a8a; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(30,58,138,0.2);">Guardar Configuración</button>
+                    </form>
+                </div>
+            </div>
+        `;
+
+        // Cargar ajustes actuales
+        fetch(inmoPressDashboard.rest_url + 'inmopress/v1/settings/smtp', { headers: { 'X-WP-Nonce': inmoPressDashboard.nonce } })
+        .then(res => res.json())
+        .then(data => {
+            if (data.host) {
+                document.getElementById('smtp-host').value = data.host;
+                document.getElementById('smtp-port').value = data.port;
+                document.getElementById('smtp-user').value = data.user;
+                document.getElementById('smtp-pass').value = data.pass;
+                document.getElementById('smtp-name').value = data.name;
+            }
+        });
+    }
+
+    window.saveSMTPSettings = function(e) {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        fetch(inmoPressDashboard.rest_url + 'inmopress/v1/settings/smtp', {
+            method: 'POST',
+            headers: { 'X-WP-Nonce': inmoPressDashboard.nonce },
+            body: fd
+        }).then(res => res.json()).then(data => {
+            if (data.success) alert('Configuración SMTP guardada correctamente.');
+        });
+    }
+
+    // ------------------------------------------------------------------------
+    // TAREAS PARA AGENTES (Módulo 7)
+    // ------------------------------------------------------------------------
+    // Modificar renderTasks o el modal de creación para incluir el selector de agentes
+    const originalOpenAddTaskModal = window.openAddTaskModal;
+    window.openAddTaskModal = function() {
+        // En lugar de llamar al original, reconstruimos un modal más potente
+        const agentOpts = window.allAgentsData.map(a => `<option value="${a.id}">${a.title.rendered}</option>`).join('');
+        
+        const modalHTML = `
+            <div id="ip-add-task-modal" style="position: fixed; inset: 0; background: rgba(17, 24, 39, 0.7); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+                <div style="background: white; border-radius: 12px; width: 450px; padding: 32px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
+                    <h2 style="margin: 0 0 24px 0; font-size: 20px; font-weight: 700;">Nueva Tarea</h2>
+                    <form onsubmit="window.submitTaskForm(event)">
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 4px;">Asunto</label>
+                            <input type="text" name="title" required style="width: 100%; border: 1px solid #d1d5db; border-radius: 8px; padding: 10px;">
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 4px;">Vencimiento</label>
+                            <input type="date" name="due_date" style="width: 100%; border: 1px solid #d1d5db; border-radius: 8px; padding: 10px;">
+                        </div>
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 4px;">Asignar a Agente</label>
+                            <select name="agent_id" style="width: 100%; border: 1px solid #d1d5db; border-radius: 8px; padding: 10px; background: white;">
+                                <option value="">Sin asignar (Propia)</option>
+                                ${agentOpts}
+                            </select>
+                        </div>
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button type="button" onclick="document.getElementById('ip-add-task-modal').remove()" style="padding: 10px 20px; border-radius: 8px; border: 1px solid #d1d5db; background: white; cursor: pointer;">Cancelar</button>
+                            <button type="submit" style="padding: 10px 24px; border-radius: 8px; border: none; background: #1e3a8a; color: white; font-weight: 600; cursor: pointer;">Crear Tarea</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    };
+
+    window.submitTaskForm = function(e) {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        fetch(inmoPressDashboard.rest_url + 'inmopress/v1/task/save', {
+            method: 'POST',
+            headers: { 'X-WP-Nonce': inmoPressDashboard.nonce },
+            body: fd
+        }).then(() => {
+            document.getElementById('ip-add-task-modal').remove();
+            fetchTasks();
+        });
     };
 
     window.seedDashboardData = function() {

@@ -84,6 +84,14 @@ function inmopress_dashboard_register_post_types() {
         'supports' => array( 'title', 'editor', 'custom-fields' ),
         'menu_icon' => 'dashicons-filter',
     ) );
+
+    register_post_type( 'impress_message', array(
+        'labels' => array( 'name' => 'Mensajes', 'singular_name' => 'Mensaje' ),
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => array( 'title', 'editor', 'custom-fields' ),
+        'menu_icon' => 'dashicons-email-alt',
+    ) );
 }
 
 function InmoPress_Dashboard_Init() {
@@ -107,7 +115,7 @@ function inmopress_dashboard_register_rest_fields() {
         'schema'          => null,
     ) );
 
-    $generic_meta_cpts = array('impress_offer', 'impress_deal', 'impress_invoice', 'impress_event', 'impress_task', 'impress_demand');
+    $generic_meta_cpts = array('impress_offer', 'impress_deal', 'impress_invoice', 'impress_event', 'impress_task', 'impress_demand', 'impress_agent', 'impress_agency', 'impress_lead', 'impress_owner', 'impress_message');
     foreach ($generic_meta_cpts as $cpt) {
         register_rest_field( $cpt, 'ip_meta', array(
             'get_callback'    => 'inmopress_dashboard_get_generic_meta',
@@ -115,6 +123,13 @@ function inmopress_dashboard_register_rest_fields() {
             'schema'          => null,
         ) );
     }
+
+    // Explicitly handle agent_id for tasks if needed beyond generic meta
+    register_rest_field( 'impress_task', 'agent_id', array(
+        'get_callback'    => function($object) { return get_post_meta($object['id'], 'agent_id', true); },
+        'update_callback' => function($value, $object) { return update_post_meta($object['id'], 'agent_id', $value); },
+        'schema'          => null,
+    ) );
 }
 
 function inmopress_dashboard_get_generic_meta( $object, $field_name, $request ) {
@@ -253,6 +268,49 @@ function inmopress_dashboard_register_custom_endpoints() {
     register_rest_route('inmopress/v1', '/demand/save', array(
         'methods' => 'POST',
         'callback' => 'inmopress_dashboard_save_demand_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    // SMTP & Communication
+    register_rest_route('inmopress/v1', '/settings/smtp', array(
+        'methods' => array('GET', 'POST'),
+        'callback' => 'inmopress_dashboard_smtp_settings_handler',
+        'permission_callback' => function () { return current_user_can('manage_options'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/communication/log', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_log_communication_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/communication/send-email', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_send_email_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/agent/save', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_save_agent_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/agency/save', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_save_agency_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/lead/update/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'inmopress_dashboard_update_lead_handler',
+        'permission_callback' => function () { return current_user_can('edit_posts'); }
+    ));
+
+    register_rest_route('inmopress/v1', '/lead/delete/(?P<id>\d+)', array(
+        'methods' => 'DELETE',
+        'callback' => 'inmopress_dashboard_delete_lead_handler',
         'permission_callback' => function () { return current_user_can('edit_posts'); }
     ));
 }
@@ -625,6 +683,170 @@ function inmopress_dashboard_save_demand_handler($request) {
     update_post_meta($post_id, 'parking', sanitize_text_field($params['parking'] ?? '0'));
     
     return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
+// ------------------------------------------------------------------------
+// SMTP & Communication Handlers
+// ------------------------------------------------------------------------
+
+function inmopress_dashboard_smtp_settings_handler($request) {
+    if ($request->get_method() === 'POST') {
+        $params = $request->get_params();
+        update_option('inmopress_smtp_host', sanitize_text_field($params['host'] ?? ''));
+        update_option('inmopress_smtp_port', sanitize_text_field($params['port'] ?? ''));
+        update_option('inmopress_smtp_user', sanitize_text_field($params['user'] ?? ''));
+        update_option('inmopress_smtp_pass', sanitize_text_field($params['pass'] ?? ''));
+        update_option('inmopress_smtp_from', sanitize_email($params['from'] ?? ''));
+        update_option('inmopress_smtp_name', sanitize_text_field($params['name'] ?? ''));
+        return rest_ensure_response(array('success' => true));
+    }
+
+    return rest_ensure_response(array(
+        'host' => get_option('inmopress_smtp_host', ''),
+        'port' => get_option('inmopress_smtp_port', '587'),
+        'user' => get_option('inmopress_smtp_user', ''),
+        'pass' => get_option('inmopress_smtp_pass', ''),
+        'from' => get_option('inmopress_smtp_from', get_option('admin_email')),
+        'name' => get_option('inmopress_smtp_name', get_bloginfo('name'))
+    ));
+}
+
+function inmopress_dashboard_log_communication_handler($request) {
+    $params = $request->get_params();
+    $client_id = intval($params['client_id'] ?? 0);
+    $type = sanitize_text_field($params['type'] ?? 'Nota'); // Email, WhatsApp, Llamada, Nota
+    $content = sanitize_textarea_field($params['content'] ?? '');
+    
+    if (!$client_id) return new WP_Error('missing_client', 'Se requiere ID de cliente.', array('status' => 400));
+
+    // Podemos guardar estas comunicaciones como metadatos en un array o como un CPT 'impress_message'
+    // Dado que ya existe 'impress_message' en inmopress-emails, lo usaremos.
+    $post_id = wp_insert_post(array(
+        'post_title'   => '[' . strtoupper($type) . '] - ' . current_time('mysql'),
+        'post_content' => $content,
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_message',
+    ));
+
+    if (is_wp_error($post_id)) return $post_id;
+
+    update_post_meta($post_id, 'ip_client_id', $client_id);
+    update_post_meta($post_id, 'ip_comm_type', $type);
+    update_post_meta($post_id, 'ip_agent_id', get_current_user_id());
+    
+    return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
+function inmopress_dashboard_send_email_handler($request) {
+    $params = $request->get_params();
+    $to = sanitize_email($params['to'] ?? '');
+    $subject = sanitize_text_field($params['subject'] ?? 'Mensaje de InmoPress');
+    $message = wp_kses_post($params['message'] ?? '');
+    $client_id = intval($params['client_id'] ?? 0);
+
+    if (!$to) return new WP_Error('missing_recipient', 'Destinatario no especificado.', array('status' => 400));
+
+    // Aplicar filtros para SMTP antes de enviar
+    add_action('phpmailer_init', 'inmopress_dashboard_smtp_config_apply');
+    
+    $sent = wp_mail($to, $subject, $message, array('Content-Type: text/html; charset=UTF-8'));
+    
+    remove_action('phpmailer_init', 'inmopress_dashboard_smtp_config_apply');
+
+    if ($sent) {
+        // Loguear el email enviado
+        inmopress_dashboard_log_communication_handler($request); 
+        return rest_ensure_response(array('success' => true));
+    }
+
+    return new WP_Error('email_failed', 'El envío del correo falló.', array('status' => 500));
+}
+
+function inmopress_dashboard_smtp_config_apply($phpmailer) {
+    $host = get_option('inmopress_smtp_host');
+    if (!$host) return;
+
+    $phpmailer->isSMTP();
+    $phpmailer->Host       = $host;
+    $phpmailer->SMTPAuth   = true;
+    $phpmailer->Port       = get_option('inmopress_smtp_port', 587);
+    $phpmailer->Username   = get_option('inmopress_smtp_user');
+    $phpmailer->Password   = get_option('inmopress_smtp_pass');
+    $phpmailer->SMTPSecure = ($phpmailer->Port == 465) ? 'ssl' : 'tls';
+    $phpmailer->From       = get_option('inmopress_smtp_from');
+    $phpmailer->FromName   = get_option('inmopress_smtp_name');
+}
+
+// ------------------------------------------------------------------------
+// CRM Addons Handlers (Agents, Agencies, Leads)
+// ------------------------------------------------------------------------
+
+function inmopress_dashboard_save_agent_handler($request) {
+    $params = $request->get_params();
+    $id = intval($params['id'] ?? 0);
+    
+    $post_data = array(
+        'post_title'   => sanitize_text_field($params['title'] ?? 'Agente'),
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_agent',
+    );
+    
+    if ($id > 0) { $post_data['ID'] = $id; $post_id = wp_update_post($post_data); }
+    else { $post_id = wp_insert_post($post_data); }
+
+    if (is_wp_error($post_id)) return $post_id;
+
+    update_post_meta($post_id, 'cargo', sanitize_text_field($params['cargo'] ?? ''));
+    update_post_meta($post_id, 'telefono', sanitize_text_field($params['telefono'] ?? ''));
+    update_post_meta($post_id, 'email', sanitize_email($params['email'] ?? ''));
+    
+    return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
+function inmopress_dashboard_save_agency_handler($request) {
+    $params = $request->get_params();
+    $id = intval($params['id'] ?? 0);
+    
+    $post_data = array(
+        'post_title'   => sanitize_text_field($params['title'] ?? 'Agencia'),
+        'post_status'  => 'publish',
+        'post_type'    => 'impress_agency',
+    );
+    
+    if ($id > 0) { $post_data['ID'] = $id; $post_id = wp_update_post($post_data); }
+    else { $post_id = wp_insert_post($post_data); }
+
+    if (is_wp_error($post_id)) return $post_id;
+
+    update_post_meta($post_id, 'ciudad', sanitize_text_field($params['ciudad'] ?? ''));
+    update_post_meta($post_id, 'telefono', sanitize_text_field($params['telefono'] ?? ''));
+    update_post_meta($post_id, 'email', sanitize_email($params['email'] ?? ''));
+    
+    return rest_ensure_response(array('success' => true, 'id' => $post_id));
+}
+
+function inmopress_dashboard_update_lead_handler($request) {
+    $id = intval($request['id']);
+    $params = $request->get_params();
+    
+    if ($id <= 0) return new WP_Error('invalid_id', 'ID inválida', array('status' => 400));
+    
+    foreach ($params as $key => $value) {
+        if ($key === 'id') continue;
+        update_post_meta($id, $key, sanitize_text_field($value));
+    }
+    
+    return rest_ensure_response(array('success' => true));
+}
+
+function inmopress_dashboard_delete_lead_handler($request) {
+    $id = intval($request['id']);
+    if ($id <= 0) return new WP_Error('invalid_id', 'ID inválida', array('status' => 400));
+    
+    $deleted = wp_delete_post($id, true);
+    if (!$deleted) return new WP_Error('delete_failed', 'Error al eliminar lead', array('status' => 500));
+    
+    return rest_ensure_response(array('success' => true));
 }
 
 
